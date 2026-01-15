@@ -1,233 +1,318 @@
-<!DOCTYPE html>
+<!DOCTYPE html><!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uber Jnr | JNR Troyes - Livraison Express 1h</title>
-    <meta name="description" content="Commandez vos JNR Shisha & Alien chez Uber Jnr à Troyes. Promotion 4 achetées = 1 offerte. Livraison express à Troyes et alentours.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Uber Jnr | Troyes ⚡</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #000; color: #fff; scroll-behavior: smooth; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #000; color: #fff; scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .promo-card { border: 2px solid #22c55e; box-shadow: 0 0 40px rgba(34, 197, 94, 0.2); }
-        .skeleton { background: linear-gradient(90deg, #111 25%, #222 50%, #111 75%); background-size: 200% 100%; animation: loading 1.5s infinite; }
-        @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-        input::placeholder { color: rgba(255,255,255,0.3); }
+        
+        .promo-container { background: #16a34a; overflow: hidden; position: fixed; top: 0; width: 100%; z-index: 100; padding: 12px 0; border-bottom: 2px solid rgba(0,0,0,0.1); }
+        .promo-wrapper { display: flex; width: max-content; animation: marquee-infinite 20s linear infinite; }
+        .promo-text { font-size: 14px; font-weight: 900; text-transform: uppercase; color: #000; font-style: italic; white-space: nowrap; display: flex; align-items: center; }
+        .separator { margin: 0 40px; }
+
+        @keyframes marquee-infinite { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        .live-dot { height: 8px; width: 8px; background-color: #22c55e; border-radius: 50%; display: inline-block; margin-right: 5px; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); } }
+        .modal { display: none; position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,0.95); align-items: center; justify-content: center; padding: 20px; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        ::-webkit-scrollbar { display: none; }
     </style>
 </head>
-<body class="pb-32">
+<body class="pb-24">
 
-    <div id="promoGate" class="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-6 text-center">
-        <div class="promo-card max-w-lg w-full bg-[#0a0a0a] p-10 rounded-[3rem]">
-            <h2 class="text-5xl font-800 mb-6 tracking-tighter uppercase leading-none">UBER <span class="text-green-500">JNR</span></h2>
-            <p class="text-gray-400 mb-8 italic text-lg">La 5ème JNR est offerte. Livraison express sur Troyes !</p>
-            <button onclick="document.getElementById('promoGate').style.display='none'" class="w-full bg-green-600 py-5 rounded-2xl font-800 uppercase tracking-widest transition-all">ACCÉDER AU CATALOGUE</button>
+    <div class="promo-container">
+        <div class="promo-wrapper">
+            <div class="promo-text">
+                ⚡ OFFRE EXCLUSIVE : 4 JNR ACHETÉES = LA 5ÈME OFFERTE ! <span class="separator">🎁</span> INVITE 5 POTES = 1 JNR GRATUITE ! ⚡
+                <span class="separator">🔥🔥🔥</span>
+                ⚡ OFFRE EXCLUSIVE : 4 JNR ACHETÉES = LA 5ÈME OFFERTE ! <span class="separator">🎁</span> INVITE 5 POTES = 1 JNR GRATUITE ! ⚡
+                <span class="separator">🔥🔥🔥</span>
+            </div>
+            <div class="promo-text">
+                ⚡ OFFRE EXCLUSIVE : 4 JNR ACHETÉES = LA 5ÈME OFFERTE ! <span class="separator">🎁</span> INVITE 5 POTES = 1 JNR GRATUITE ! ⚡
+                <span class="separator">🔥🔥🔥</span>
+                ⚡ OFFRE EXCLUSIVE : 4 JNR ACHETÉES = LA 5ÈME OFFERTE ! <span class="separator">🎁</span> INVITE 5 POTES = 1 JNR GRATUITE ! ⚡
+                <span class="separator">🔥🔥🔥</span>
+            </div>
         </div>
     </div>
 
-    <nav class="fixed w-full z-50 glass px-6 py-4 flex justify-between items-center">
-        <div class="text-2xl font-800 tracking-tighter uppercase italic text-white">Uber<span class="text-green-500">Jnr</span></div>
-        <div class="flex gap-4 items-center">
+    <nav class="fixed top-12 w-full z-50 glass px-6 py-4 flex justify-between items-center">
+        <div class="text-2xl font-800 uppercase italic">Uber<span class="text-green-500">Jnr</span></div>
+        <div class="flex gap-3 items-center">
+            <button id="memberBtn" onclick="openAuth()" class="bg-green-600/10 border border-green-500/20 px-3 py-2 rounded-xl text-[9px] font-bold uppercase text-green-500 italic">Espace Membre</button>
             <button onclick="toggleCart()" class="relative bg-white/10 p-3 rounded-full">
-                🛒 <span id="cartCount" class="absolute -top-1 -right-1 bg-green-500 text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold">0</span>
+                🛒 <span id="cartCount" class="absolute -top-1 -right-1 bg-green-500 text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold text-black">0</span>
             </button>
-            <button onclick="handleAdminAuth()" id="adminBtn" class="text-[9px] font-bold text-gray-500 uppercase">Admin</button>
+            <button onclick="handleAdminAuth()" class="text-[9px] font-bold text-gray-600 uppercase">Admin</button>
         </div>
     </nav>
 
-    <header class="pt-36 pb-10 text-center px-6">
-        <h1 class="text-6xl font-800 tracking-tighter uppercase italic text-white italic">UBER <span class="text-green-500 italic">JNR</span></h1>
-        <p class="text-gray-500 mt-2 text-sm uppercase tracking-[0.2em]">Livraison Express • Troyes 10000</p>
-    </header>
-
-    <section class="max-w-6xl mx-auto px-6 mb-12 flex flex-col md:flex-row gap-4">
-        <input type="text" id="searchBar" onkeyup="render()" placeholder="Rechercher un goût..." class="flex-grow bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-green-500 outline-none">
-        <select id="filterRange" onchange="render()" class="bg-white/5 border border-white/10 p-5 rounded-2xl outline-none min-w-[180px]">
-            <option value="all" class="bg-black">Tous les modèles JNR</option>
-        </select>
-    </section>
-
-    <section id="adminPanel" class="hidden max-w-6xl mx-auto mx-6 mb-12 p-8 glass rounded-[2rem] border-green-600/30">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-black mb-4">
-            <input type="text" id="pName" placeholder="Goût" class="p-4 rounded-xl font-bold">
-            <input type="text" id="pCat" placeholder="Modèle (ex: Shisha 12k)" class="p-4 rounded-xl font-bold">
-            <input type="number" id="pQty" placeholder="Stock disponible" class="p-4 rounded-xl font-bold">
-            <input type="text" id="pImg" placeholder="Lien image" class="p-4 rounded-xl font-bold">
-            <select id="pNew" class="p-4 rounded-xl font-bold"><option value="false">Standard</option><option value="true">Nouveauté</option></select>
-            <button onclick="addPuff()" class="bg-green-600 text-white font-bold rounded-xl uppercase">Ajouter</button>
+    <header class="pt-56 pb-10 text-center px-6">
+        <div id="statusBadge" class="flex flex-col items-center gap-2 mb-6">
+            <div id="statusIndicator" class="inline-flex items-center px-4 py-1 rounded-full border"></div>
+            <div id="courierCount" class="text-[10px] font-bold text-gray-400 uppercase italic"></div>
         </div>
-    </section>
+        <h1 class="text-6xl font-800 uppercase italic">UBER <span class="text-green-500">JNR</span></h1>
+        <p class="text-[9px] text-gray-500 font-bold uppercase mt-4 tracking-[3px] italic">Premium Delivery Troyes</p>
+    </header>
 
     <main id="catalogue" class="max-w-6xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></main>
 
-    <section class="max-w-4xl mx-auto px-6 mt-32 border-t border-white/10 pt-20">
-        <h2 class="text-3xl font-800 mb-10 text-center uppercase tracking-tighter italic">Questions <span class="text-green-500">Fréquentes</span></h2>
-        <div class="space-y-6 text-left">
-            <div class="glass p-6 rounded-2xl">
-                <h3 class="font-bold text-green-500 mb-2">Comment se passe la livraison Uber Jnr ?</h3>
-                <p class="text-gray-400 text-sm">Nous livrons sur Troyes et ses alentours en moins de 1h après votre commande. Livraison discrète garantie.</p>
+    <div id="authModal" class="modal">
+        <div class="max-w-md w-full glass p-10 rounded-[3rem] text-center relative">
+            <button onclick="closeAuth()" class="absolute top-6 right-8 text-gray-500 text-3xl">&times;</button>
+            <div id="authContent">
+                <h2 class="text-4xl font-800 uppercase mb-2 italic">CLUB <span class="text-green-500">JNR</span></h2>
+                <div class="space-y-4 mt-8">
+                    <input type="text" id="regName" placeholder="Ton Pseudonyme" class="w-full p-5 rounded-2xl bg-white/5 border border-white/10 text-center font-bold outline-none text-white">
+                    <input type="text" id="regPhone" placeholder="Ton numéro" class="w-full p-5 rounded-2xl bg-white/5 border border-white/10 text-center font-bold outline-none text-white">
+                    <button onclick="requestVerificationCode()" class="w-full bg-green-600 py-5 rounded-2xl font-800 uppercase italic">Recevoir mon code</button>
+                    <div id="verifyZone" class="hidden space-y-4 mt-6 pt-6 border-t border-white/10">
+                        <input type="number" id="verifyCodeInput" placeholder="0000" class="w-full p-5 rounded-2xl bg-white text-black text-3xl text-center font-bold">
+                        <button onclick="validateAccount()" class="w-full bg-white text-black py-5 rounded-2xl font-800 uppercase italic">Valider</button>
+                    </div>
+                </div>
             </div>
-            <div class="glass p-6 rounded-2xl">
-                <h3 class="font-bold text-green-500 mb-2">Quels sont les modes de paiement ?</h3>
-                <p class="text-gray-400 text-sm">Le règlement se fait directement à la livraison en espèces, Lydia ou Revolut.</p>
+            <div id="profileContent" class="hidden space-y-6">
+                <h2 id="profName" class="text-2xl font-800 uppercase text-green-500 italic"></h2>
+                <div class="bg-white/5 p-6 rounded-3xl border border-white/10">
+                    <p class="text-[10px] uppercase text-gray-400 mb-2 font-bold">Progression Cadeau</p>
+                    <div class="w-full bg-gray-800 h-3 rounded-full overflow-hidden mb-2">
+                        <div id="referralBar" class="bg-green-500 h-full transition-all duration-1000" style="width: 0%"></div>
+                    </div>
+                    <p class="text-sm font-bold"><span id="referralCountDisplay">0</span> / 5 parrainages</p>
+                </div>
+                <button onclick="shareWithFriend()" class="w-full bg-green-600 py-4 rounded-2xl font-800 uppercase text-xs italic">Parrainer un pote</button>
+                <button onclick="logout()" class="text-red-500 text-[10px] font-bold uppercase">Déconnexion</button>
             </div>
         </div>
-    </section>
+    </div>
 
-    <div id="cartModal" class="fixed inset-y-0 right-0 w-full md:w-[450px] bg-[#0a0a0a] z-[60] transform translate-x-full transition-transform duration-300 p-8 flex flex-col border-l border-white/10 overflow-y-auto">
+    <div id="cartModal" class="fixed inset-y-0 right-0 w-full md:w-[480px] bg-[#0a0a0a] z-[300] transform translate-x-full transition-transform duration-300 p-8 flex flex-col border-l border-white/10 overflow-y-auto">
         <div class="flex justify-between items-center mb-8">
-            <h2 class="text-3xl font-800 uppercase tracking-tighter italic">Panier Uber Jnr</h2>
-            <button onclick="toggleCart()" class="text-gray-500 text-2xl">&times;</button>
+            <h2 class="text-3xl font-800 uppercase italic">Ma Course</h2>
+            <button onclick="toggleCart()" class="text-gray-500 text-4xl">&times;</button>
         </div>
-
         <div id="cartItems" class="space-y-4 mb-8"></div>
-
-        <div id="addressForm" class="space-y-4 pt-6 border-t border-white/10 text-left">
-            <h3 class="text-green-500 font-bold uppercase text-xs tracking-widest">Informations de livraison</h3>
-            <input type="text" id="uName" placeholder="Votre Nom" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-green-500 text-white">
-            <input type="text" id="uAddr" placeholder="Adresse complète (N°, rue...)" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-green-500 text-white">
-            <div class="grid grid-cols-2 gap-2">
-                <input type="text" id="uCp" placeholder="Code Postal" class="bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-green-500 text-white">
-                <input type="text" id="uCity" value="Troyes" class="bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-green-500 text-white">
+        <div class="space-y-6 pt-6 border-t border-white/10">
+            <div class="space-y-3">
+                <h3 class="text-green-500 font-bold uppercase text-[10px] tracking-[3px] italic">📍 Détails Livraison</h3>
+                <input type="text" id="uAddr" placeholder="N° et Nom de rue" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none">
+                <div class="grid grid-cols-2 gap-2">
+                    <input type="text" id="uCp" placeholder="Code Postal" class="bg-white/5 border border-white/10 p-4 rounded-xl text-white text-center outline-none">
+                    <input type="text" id="uCity" value="Troyes" class="bg-white/5 border border-white/10 p-4 rounded-xl text-white text-center outline-none">
+                </div>
+                <textarea id="uNote" placeholder="Notes (Code, étage, etc...)" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white h-20 outline-none italic"></textarea>
             </div>
-            <textarea id="uNote" placeholder="Instructions supplémentaires..." class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-green-500 h-20 text-white"></textarea>
+            <div class="space-y-3">
+                <h3 class="text-green-500 font-bold uppercase text-[10px] tracking-[3px] italic">💳 Mode de Règlement</h3>
+                <div class="grid grid-cols-1 gap-2">
+                    <button onclick="setPay('Carte (+0,40€ frais)', this)" class="pay-btn border border-white/10 p-4 rounded-xl text-[10px] font-bold uppercase bg-white/5 text-left flex justify-between"><span>💳 Carte (+0,40€ frais)</span></button>
+                    <button onclick="setPay('Espèces', this)" class="pay-btn border border-white/10 p-4 rounded-xl text-[10px] font-bold uppercase bg-white/5 text-left flex justify-between"><span>💵 Espèces</span></button>
+                </div>
+            </div>
+            <div class="pt-4">
+                <div id="promoNotice" class="text-green-500 text-[10px] font-bold uppercase mb-4 text-center animate-pulse"></div>
+                <button id="orderBtn" onclick="sendOrder()" class="w-full bg-green-600 py-6 rounded-2xl font-800 uppercase italic shadow-xl shadow-green-600/20">⚡ Commander sur WhatsApp</button>
+            </div>
         </div>
+    </div>
 
-        <div class="mt-8 pt-8 border-t border-white/10">
-            <div id="promoNotice" class="text-green-500 text-xs font-bold uppercase mb-4 text-center"></div>
-            <button onclick="sendOrder()" class="w-full bg-green-600 py-6 rounded-2xl font-800 uppercase tracking-widest shadow-xl shadow-green-600/20 active:scale-95 transition-all">
-                🚀 Commander via WhatsApp
-            </button>
+    <div id="adminPanel" class="hidden fixed inset-0 z-[600] bg-black overflow-y-auto p-6 pt-24">
+        <div class="max-w-4xl mx-auto space-y-8">
+            <div class="flex justify-between items-center">
+                <h2 class="text-3xl font-800 uppercase text-green-500 italic">Admin Dashboard</h2>
+                <button onclick="handleAdminAuth()" class="text-white text-3xl">&times;</button>
+            </div>
+            <div class="flex gap-4 border-b border-white/10 pb-4">
+                <button onclick="showTab('clients')" class="text-xs font-bold uppercase text-green-500">Clients</button>
+                <button onclick="showTab('stock')" class="text-xs font-bold uppercase text-gray-500">Config & Stock</button>
+                <button onclick="backupSite()" class="text-xs font-bold uppercase text-blue-500 ml-auto italic">Sauvegarder HTML</button>
+            </div>
+            <div id="tab-clients" class="tab-content active space-y-4"><div id="clientsList" class="grid gap-3"></div></div>
+            <div id="tab-stock" class="tab-content space-y-6 text-black font-bold">
+                <div class="glass p-6 rounded-3xl space-y-4">
+                    <p class="text-white uppercase text-[10px]">⚙️ STATUT & LIVREURS</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <input type="number" id="openHour" placeholder="Ouverture" class="p-4 rounded-xl">
+                        <input type="number" id="closeHour" placeholder="Fermeture" class="p-4 rounded-xl">
+                    </div>
+                    <input type="number" id="courierInput" placeholder="Nombre de livreurs" class="w-full p-4 rounded-xl">
+                    <button onclick="saveSettings()" class="w-full bg-green-600 text-white py-3 rounded-xl font-bold uppercase text-xs">Valider Config</button>
+                </div>
+                <div class="glass p-6 rounded-3xl space-y-4">
+                    <p class="text-white uppercase text-[10px]">📦 AJOUTER PRODUIT</p>
+                    <input type="text" id="pName" placeholder="Goût" class="w-full p-4 rounded-xl">
+                    <input type="text" id="pCat" placeholder="Gamme" class="w-full p-4 rounded-xl">
+                    <button onclick="addPuff()" class="w-full bg-green-600 text-white py-4 rounded-xl font-bold uppercase italic">Ajouter</button>
+                </div>
+                <div id="adminStockDisplay" class="space-y-2"></div>
+            </div>
         </div>
     </div>
 
     <script>
-        const CODE_SECRET = "2908";
         const MON_WHATSAPP = "33785141135";
-        let isAdmin = false;
+        const ADMIN_PASS = "2908";
+        const CODES_VALIDES = ["4721","8305","1294","5562","3847","9210","6619","4038","7253","1540","1092","6641","3387","9012","4420","7731","2158","5904","8826","3047","2908"];
+
+        let selectedPayment = "Non spécifié";
         let cart = [];
+        let isAdmin = false;
+        let inventory = JSON.parse(localStorage.getItem('jnr_inv')) || [{ id: 1, name: "Blue Razz Ice", cat: "Shisha 12000" }];
+        let clients = JSON.parse(localStorage.getItem('jnr_clients')) || {};
+        let settings = JSON.parse(localStorage.getItem('jnr_set')) || { open: 10, close: 22, couriers: 1 };
 
-        let inventory = JSON.parse(localStorage.getItem('uber_jnr_v1')) || [
-            { id: 1, name: "Blue Razz Ice", range: "Shisha 12000", stock: 10, img: "", isNew: true },
-            { id: 2, name: "Peach Ice", range: "Alien 10000", stock: 2, img: "", isNew: false }
-        ];
-
-        function toggleCart() { document.getElementById('cartModal').classList.toggle('translate-x-full'); renderCart(); }
-
-        function addToCart(id) {
-            const item = inventory.find(p => p.id === id);
-            if (item && item.stock > 0) {
-                cart.push({...item});
-                updateCartCount();
-                renderCart();
-            }
+        window.onload = function() {
+            renderCatalogue();
+            checkStatus();
+            const user = JSON.parse(localStorage.getItem('jnr_logged'));
+            if(user) updateUIMember(user);
+            document.getElementById('openHour').value = settings.open;
+            document.getElementById('closeHour').value = settings.close;
+            document.getElementById('courierInput').value = settings.couriers;
         }
 
-        function updateCartCount() { document.getElementById('cartCount').innerText = cart.length; }
+        function setPay(method, btn) {
+            selectedPayment = method;
+            document.querySelectorAll('.pay-btn').forEach(b => b.classList.remove('border-green-500', 'bg-green-500/20'));
+            btn.classList.add('border-green-500', 'bg-green-500/20');
+        }
 
-        function renderCart() {
-            const container = document.getElementById('cartItems');
-            container.innerHTML = "";
-            if(cart.length === 0) container.innerHTML = "<p class='text-gray-600 italic text-center'>Le panier Uber Jnr est vide</p>";
-            
-            cart.forEach((item, idx) => {
-                container.innerHTML += `
-                    <div class="flex justify-between items-center bg-white/5 p-4 rounded-xl border border-white/5">
-                        <div class="text-sm">
-                            <span class="text-green-500 font-bold block text-[10px] uppercase">${item.range}</span>
-                            <span class="font-bold uppercase text-white">${item.name}</span>
-                        </div>
-                        <button onclick="removeFromCart(${idx})" class="text-red-500 text-xs font-bold bg-red-500/10 px-3 py-1 rounded-lg">Retirer</button>
+        function renderCatalogue() {
+            const cont = document.getElementById('catalogue');
+            cont.innerHTML = "";
+            inventory.forEach(item => {
+                cont.innerHTML += `
+                    <div class="glass rounded-[2.5rem] p-6 flex flex-col">
+                        <div class="h-48 bg-white/5 rounded-3xl mb-4"></div>
+                        <span class="text-[9px] font-bold text-green-500 uppercase italic text-center">${item.cat}</span>
+                        <h3 class="text-xl font-800 uppercase italic mb-6 text-center italic">${item.name}</h3>
+                        <button onclick="addToCart(${item.id})" class="mt-auto w-full bg-white text-black py-4 rounded-2xl font-800 text-xs uppercase italic text-center">Ajouter au panier</button>
                     </div>`;
             });
-
-            const p = document.getElementById('promoNotice');
-            p.innerText = cart.length >= 4 ? "✅ OFFRE 4+1 VALIDÉE !" : (cart.length > 0 ? `Encore ${5 - cart.length} pour la gratuite` : "");
         }
 
-        function removeFromCart(idx) { cart.splice(idx, 1); renderCart(); updateCartCount(); }
+        function addToCart(id) {
+            const item = inventory.find(i => i.id === id);
+            if(item) { cart.push(item); renderCart(); }
+        }
+
+        function renderCart() {
+            document.getElementById('cartCount').innerText = cart.length;
+            const cont = document.getElementById('cartItems');
+            cont.innerHTML = cart.length === 0 ? "<p class='text-center text-gray-500 italic py-10 uppercase text-[10px]'>Panier vide</p>" : "";
+            cart.forEach((item, idx) => {
+                cont.innerHTML += `<div class="flex justify-between items-center bg-white/5 p-4 rounded-xl border border-white/10"><div><p class="font-bold uppercase">${item.name}</p></div><button onclick="cart.splice(${idx},1);renderCart()" class="text-red-500 text-xl font-bold">&times;</button></div>`;
+            });
+            document.getElementById('promoNotice').innerText = cart.length >= 4 ? "🎁 OFFRE 4+1 ACTIVÉE !" : "";
+        }
 
         function sendOrder() {
-            const name = document.getElementById('uName').value;
             const addr = document.getElementById('uAddr').value;
             const cp = document.getElementById('uCp').value;
             const city = document.getElementById('uCity').value;
             const note = document.getElementById('uNote').value;
-
-            if (cart.length === 0) return alert("Le panier est vide.");
-            if (!name || !addr || !cp) return alert("Veuillez remplir vos coordonnées de livraison.");
-
-            let recap = cart.map(i => `- ${i.name} (${i.range})`).join('\n');
-            let total = cart.length;
+            if(cart.length === 0 || !addr) return alert("Remplis ton panier et ton adresse !");
+            if(selectedPayment === "Non spécifié") return alert("Choisis un mode de règlement !");
             
-            let msg = `🛍️ COMMANDE UBER JNR - TROYES\n\n`;
-            msg += `👤 CLIENT : ${name}\n`;
-            msg += `📍 ADRESSE : ${addr}, ${cp} ${city}\n`;
-            if(note) msg += `📝 NOTE : ${note}\n`;
-            msg += `\n📦 PRODUITS :\n${recap}\n\n`;
-            msg += `🔥 TOTAL : ${total} JNR (Offre 4+1 incluse)`;
-
+            const user = JSON.parse(localStorage.getItem('jnr_logged')) || { phone: "Invité", name: "Invité" };
+            
+            let recap = cart.map(i => `- ${i.name}`).join('\n');
+            let msg = `⚡ NOUVELLE COMMANDE\n👤 Client : ${user.name} (${user.phone})\n📍 Adresse : ${addr}, ${cp} ${city}\n📝 Note : ${note}\n💳 Paiement : ${selectedPayment}\n📦 Produits :\n${recap}\n🔥 TOTAL : ${cart.length} JNR`;
+            
             window.open(`https://wa.me/${MON_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        function render() {
-            const container = document.getElementById('catalogue');
-            const search = document.getElementById('searchBar').value.toLowerCase();
-            const rangeFilter = document.getElementById('filterRange').value;
-            container.innerHTML = "";
-
-            const ranges = [...new Set(inventory.map(i => i.range))];
-            const select = document.getElementById('filterRange');
-            select.innerHTML = '<option value="all">Tous les modèles JNR</option>';
-            ranges.forEach(r => select.innerHTML += `<option value="${r}">${r}</option>`);
-
-            const filtered = inventory.filter(i => i.name.toLowerCase().includes(search) && (rangeFilter === "all" || i.range === rangeFilter));
-
-            filtered.sort((a,b) => b.isNew - a.isNew).forEach(item => {
-                const isLow = item.stock > 0 && item.stock <= 3;
-                const card = document.createElement('div');
-                card.className = `glass rounded-[2.5rem] p-6 flex flex-col ${item.stock === 0 ? 'opacity-30' : ''}`;
-                card.innerHTML = `
-                    <div class="h-48 bg-white/5 rounded-2xl mb-4 overflow-hidden flex items-center justify-center skeleton">
-                        <img src="${item.img || 'https://via.placeholder.com/300x300/111/22c55e?text=JNR'}" class="h-full object-contain p-4" onload="this.parentElement.classList.remove('skeleton')">
-                    </div>
-                    <div class="flex justify-between items-center mb-1">
-                        <span class="text-[10px] font-bold text-green-500 uppercase">${item.range}</span>
-                        ${item.isNew ? '<span class="bg-yellow-400 text-black text-[8px] px-2 py-0.5 rounded font-bold uppercase">New</span>' : ''}
-                    </div>
-                    <h3 class="text-xl font-800 uppercase italic mb-6 text-white">${item.name}</h3>
-                    ${isLow ? `<p class="text-[10px] text-orange-500 font-bold mb-4">⚠️ Stock Limité (${item.stock})</p>` : ''}
-                    <button onclick="${item.stock > 0 ? `addToCart(${item.id})` : ''}" class="mt-auto w-full ${item.stock > 0 ? 'bg-white text-black' : 'bg-white/5 text-gray-500'} py-4 rounded-2xl font-800 text-xs uppercase transition-all">
-                        ${item.stock > 0 ? 'Ajouter' : 'Indisponible'}
-                    </button>
-                    ${isAdmin ? `<button onclick="removeItem(${item.id})" class="mt-2 text-red-500 text-[9px] uppercase font-bold">Supprimer</button>` : ''}
-                `;
-                container.appendChild(card);
-            });
-            localStorage.setItem('uber_jnr_v1', JSON.stringify(inventory));
+        function requestVerificationCode() {
+            const p = document.getElementById('regPhone').value;
+            const n = document.getElementById('regName').value;
+            if(!n || n.length < 2) return alert("Choisis un pseudonyme");
+            if(p.length < 10) return alert("Numéro invalide");
+            document.getElementById('verifyZone').classList.remove('hidden');
+            window.open(`https://wa.me/${MON_WHATSAPP}?text=🔐%20CODE%20ACCÈS%20POUR%20${n}%20(${p})`, '_blank');
         }
 
-        function handleAdminAuth() {
-            if(isAdmin) { isAdmin = false; document.getElementById('adminPanel').classList.add('hidden'); render(); }
-            else if(prompt("Code Admin Uber Jnr :") === CODE_SECRET) { isAdmin = true; document.getElementById('adminPanel').classList.remove('hidden'); render(); }
-        }
-
-        function addPuff() {
-            const name = document.getElementById('pName').value;
-            const range = document.getElementById('pCat').value;
-            const stock = parseInt(document.getElementById('pQty').value) || 0;
-            const img = document.getElementById('pImg').value;
-            const isNew = document.getElementById('pNew').value === "true";
-            if(name && range) {
-                inventory.push({ id: Date.now(), name, range, stock, img, isNew });
-                render();
+        function validateAccount() {
+            const input = document.getElementById('verifyCodeInput').value;
+            const phone = document.getElementById('regPhone').value;
+            const name = document.getElementById('regName').value;
+            if (CODES_VALIDES.includes(input)) {
+                localStorage.setItem('jnr_logged', JSON.stringify({ phone: phone, name: name, verified: true }));
+                if(!clients[phone]) clients[phone] = { points: 0, name: name };
+                save(); location.reload();
             }
         }
 
-        function removeItem(id) { inventory = inventory.filter(x => x.id !== id); render(); }
+        function updateUIMember(user) {
+            document.getElementById('memberBtn').innerText = "✅ " + user.name;
+            document.getElementById('authContent').classList.add('hidden');
+            document.getElementById('profileContent').classList.remove('hidden');
+            document.getElementById('profName').innerText = user.name;
+            const pts = clients[user.phone] ? clients[user.phone].points : 0;
+            document.getElementById('referralCountDisplay').innerText = pts;
+            document.getElementById('referralBar').style.width = (pts * 20) + "%";
+        }
 
-        render();
+        function handleAdminAuth() {
+            if(isAdmin) { isAdmin = false; document.getElementById('adminPanel').classList.add('hidden'); }
+            else if(prompt("Pass :") === ADMIN_PASS) { isAdmin = true; document.getElementById('adminPanel').classList.remove('hidden'); renderAdminClients(); renderAdminStock(); }
+        }
+
+        function checkStatus() {
+            const h = new Date().getHours();
+            const indicator = document.getElementById('statusIndicator');
+            const couriersLabel = document.getElementById('courierCount');
+            const isOpen = h >= settings.open && h < settings.close;
+            if(isOpen) {
+                indicator.innerHTML = `<span class="live-dot"></span><span class="text-green-500 text-[10px] font-bold uppercase italic">Livreurs en ligne</span>`;
+                couriersLabel.innerText = `${settings.couriers} livreur(s) disponible(s) sur Troyes`;
+            } else {
+                indicator.innerHTML = `<span class="text-red-500 text-[10px] font-bold uppercase italic tracking-widest text-center">Réouverture à ${settings.open}h</span>`;
+                couriersLabel.innerText = "Service actuellement fermé";
+            }
+        }
+
+        function saveSettings() { 
+            settings.open = parseInt(document.getElementById('openHour').value); 
+            settings.close = parseInt(document.getElementById('closeHour').value); 
+            settings.couriers = parseInt(document.getElementById('courierInput').value);
+            save(); checkStatus(); alert("Config à jour !");
+        }
+
+        function toggleCart() { document.getElementById('cartModal').classList.toggle('translate-x-full'); }
+        function openAuth() { document.getElementById('authModal').style.display = 'flex'; }
+        function closeAuth() { document.getElementById('authModal').style.display = 'none'; }
+        function showTab(tab) { document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active')); document.getElementById('tab-' + tab).classList.add('active'); }
+        function save() { localStorage.setItem('jnr_inv', JSON.stringify(inventory)); localStorage.setItem('jnr_clients', JSON.stringify(clients)); localStorage.setItem('jnr_set', JSON.stringify(settings)); }
+        function logout() { localStorage.removeItem('jnr_logged'); location.reload(); }
+        function backupSite() { const b = new Blob([document.documentElement.outerHTML], { type: 'text/html' }); const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = `uber_jnr_v5.html`; a.click(); }
+        
+        function renderAdminClients() {
+            const list = document.getElementById('clientsList'); list.innerHTML = "";
+            Object.keys(clients).forEach(phone => {
+                list.innerHTML += `<div class="glass p-4 rounded-2xl flex justify-between items-center"><div class="text-left"><p class="font-bold italic text-green-500">${clients[phone].name}</p><p class="text-[10px] text-gray-400">${phone}</p></div><button onclick="clients['${phone}'].points=(clients['${phone}'].points+1)%6;save();renderAdminClients();" class="bg-green-600 px-3 py-1 rounded-lg text-xs">+1 PT</button></div>`;
+            });
+        }
+
+        function renderAdminStock() {
+            const list = document.getElementById('adminStockDisplay'); list.innerHTML = "";
+            inventory.forEach(item => {
+                list.innerHTML += `<div class="flex justify-between p-3 bg-white/5 rounded-xl text-xs text-white"><span>${item.name}</span><button onclick="inventory=inventory.filter(i=>i.id!=${item.id});save();renderAdminStock();renderCatalogue();" class="text-red-500">Suppr</button></div>`;
+            });
+        }
+        function addPuff() {
+            const n = document.getElementById('pName').value, c = document.getElementById('pCat').value;
+            if(n && c) { inventory.push({ id: Date.now(), name: n, cat: c }); save(); renderAdminStock(); renderCatalogue(); }
+        }
     </script>
 </body>
 </html>
