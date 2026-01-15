@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S'O MARKET | JNR Shisha & Alien - Livraison Rapide</title>
-    <meta name="description" content="Découvrez le catalogue JNR chez S'O Market. Promotion 4 achetées = 1 offerte sur toute la gamme JNR Shisha et Alien. Livraison locale rapide.">
+    <title>Uber Jnr | JNR Troyes - Livraison Express 1h</title>
+    <meta name="description" content="Commandez vos JNR Shisha & Alien chez Uber Jnr à Troyes. Promotion 4 achetées = 1 offerte. Livraison express à Troyes et alentours.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
@@ -13,22 +13,21 @@
         .promo-card { border: 2px solid #22c55e; box-shadow: 0 0 40px rgba(34, 197, 94, 0.2); }
         .skeleton { background: linear-gradient(90deg, #111 25%, #222 50%, #111 75%); background-size: 200% 100%; animation: loading 1.5s infinite; }
         @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-        .cart-badge { animation: bounce 0.5s ease; }
-        @keyframes bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+        input::placeholder { color: rgba(255,255,255,0.3); }
     </style>
 </head>
 <body class="pb-32">
 
     <div id="promoGate" class="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-6 text-center">
         <div class="promo-card max-w-lg w-full bg-[#0a0a0a] p-10 rounded-[3rem]">
-            <h2 class="text-5xl font-800 mb-6 tracking-tighter uppercase leading-none">OFFRE <span class="text-green-500">4+1</span></h2>
-            <p class="text-gray-400 mb-8 italic text-lg">La 5ème JNR est offerte automatiquement dans votre panier !</p>
-            <button onclick="document.getElementById('promoGate').style.display='none'" class="w-full bg-green-600 py-5 rounded-2xl font-800 uppercase tracking-widest transition-all">VOIR LES GOÛTS</button>
+            <h2 class="text-5xl font-800 mb-6 tracking-tighter uppercase leading-none">UBER <span class="text-green-500">JNR</span></h2>
+            <p class="text-gray-400 mb-8 italic text-lg">La 5ème JNR est offerte. Livraison express sur Troyes !</p>
+            <button onclick="document.getElementById('promoGate').style.display='none'" class="w-full bg-green-600 py-5 rounded-2xl font-800 uppercase tracking-widest transition-all">ACCÉDER AU CATALOGUE</button>
         </div>
     </div>
 
     <nav class="fixed w-full z-50 glass px-6 py-4 flex justify-between items-center">
-        <div class="text-2xl font-800 tracking-tighter uppercase italic">S'O<span class="text-green-500">Market</span></div>
+        <div class="text-2xl font-800 tracking-tighter uppercase italic text-white">Uber<span class="text-green-500">Jnr</span></div>
         <div class="flex gap-4 items-center">
             <button onclick="toggleCart()" class="relative bg-white/10 p-3 rounded-full">
                 🛒 <span id="cartCount" class="absolute -top-1 -right-1 bg-green-500 text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold">0</span>
@@ -38,54 +37,68 @@
     </nav>
 
     <header class="pt-36 pb-10 text-center px-6">
-        <h1 class="text-6xl font-800 tracking-tighter uppercase italic">JNR <span class="text-green-500">OFFICIAL</span></h1>
-        <p class="text-gray-500 mt-2 text-sm uppercase tracking-[0.2em]">Sélecteur Premium JNR</p>
+        <h1 class="text-6xl font-800 tracking-tighter uppercase italic text-white italic">UBER <span class="text-green-500 italic">JNR</span></h1>
+        <p class="text-gray-500 mt-2 text-sm uppercase tracking-[0.2em]">Livraison Express • Troyes 10000</p>
     </header>
 
     <section class="max-w-6xl mx-auto px-6 mb-12 flex flex-col md:flex-row gap-4">
-        <input type="text" id="searchBar" onkeyup="render()" placeholder="Chercher une saveur..." class="flex-grow bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-green-500 outline-none">
+        <input type="text" id="searchBar" onkeyup="render()" placeholder="Rechercher un goût..." class="flex-grow bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-green-500 outline-none">
         <select id="filterRange" onchange="render()" class="bg-white/5 border border-white/10 p-5 rounded-2xl outline-none min-w-[180px]">
-            <option value="all" class="bg-black">Tous les modèles</option>
+            <option value="all" class="bg-black">Tous les modèles JNR</option>
         </select>
     </section>
 
     <section id="adminPanel" class="hidden max-w-6xl mx-auto mx-6 mb-12 p-8 glass rounded-[2rem] border-green-600/30">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-black mb-4">
-            <input type="text" id="pName" placeholder="Goût" class="p-4 rounded-xl">
-            <input type="text" id="pCat" placeholder="Modèle (ex: Shisha 12k)" class="p-4 rounded-xl">
-            <input type="text" id="pImg" placeholder="URL de l'image (optionnel)" class="p-4 rounded-xl">
-            <input type="number" id="pQty" placeholder="Quantité en stock" class="p-4 rounded-xl">
-            <select id="pNew" class="p-4 rounded-xl"><option value="false">Standard</option><option value="true">Nouveauté</option></select>
+            <input type="text" id="pName" placeholder="Goût" class="p-4 rounded-xl font-bold">
+            <input type="text" id="pCat" placeholder="Modèle (ex: Shisha 12k)" class="p-4 rounded-xl font-bold">
+            <input type="number" id="pQty" placeholder="Stock disponible" class="p-4 rounded-xl font-bold">
+            <input type="text" id="pImg" placeholder="Lien image" class="p-4 rounded-xl font-bold">
+            <select id="pNew" class="p-4 rounded-xl font-bold"><option value="false">Standard</option><option value="true">Nouveauté</option></select>
             <button onclick="addPuff()" class="bg-green-600 text-white font-bold rounded-xl uppercase">Ajouter</button>
         </div>
     </section>
 
-    <main id="catalogue" class="max-w-6xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        </main>
+    <main id="catalogue" class="max-w-6xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></main>
 
     <section class="max-w-4xl mx-auto px-6 mt-32 border-t border-white/10 pt-20">
-        <h2 class="text-3xl font-800 mb-10 text-center uppercase tracking-tighter">Questions <span class="text-green-500">Fréquentes</span></h2>
-        <div class="space-y-6">
+        <h2 class="text-3xl font-800 mb-10 text-center uppercase tracking-tighter italic">Questions <span class="text-green-500">Fréquentes</span></h2>
+        <div class="space-y-6 text-left">
             <div class="glass p-6 rounded-2xl">
-                <h3 class="font-bold text-green-500 mb-2">Comment se passe la livraison ?</h3>
-                <p class="text-gray-400 text-sm">Nous livrons localement en moins de 1h après confirmation sur WhatsApp. Discret et rapide.</p>
+                <h3 class="font-bold text-green-500 mb-2">Comment se passe la livraison Uber Jnr ?</h3>
+                <p class="text-gray-400 text-sm">Nous livrons sur Troyes et ses alentours en moins de 1h après votre commande. Livraison discrète garantie.</p>
             </div>
             <div class="glass p-6 rounded-2xl">
                 <h3 class="font-bold text-green-500 mb-2">Quels sont les modes de paiement ?</h3>
-                <p class="text-gray-400 text-sm">Le paiement s'effectue à la livraison en espèces ou via Lydia/Revolut.</p>
+                <p class="text-gray-400 text-sm">Le règlement se fait directement à la livraison en espèces, Lydia ou Revolut.</p>
             </div>
         </div>
     </section>
 
-    <div id="cartModal" class="fixed inset-y-0 right-0 w-full md:w-96 bg-[#0a0a0a] z-[60] transform translate-x-full transition-transform duration-300 p-8 flex flex-col border-l border-white/10">
+    <div id="cartModal" class="fixed inset-y-0 right-0 w-full md:w-[450px] bg-[#0a0a0a] z-[60] transform translate-x-full transition-transform duration-300 p-8 flex flex-col border-l border-white/10 overflow-y-auto">
         <div class="flex justify-between items-center mb-8">
-            <h2 class="text-2xl font-800 uppercase tracking-tighter">Votre Panier</h2>
-            <button onclick="toggleCart()" class="text-gray-500">Fermer</button>
+            <h2 class="text-3xl font-800 uppercase tracking-tighter italic">Panier Uber Jnr</h2>
+            <button onclick="toggleCart()" class="text-gray-500 text-2xl">&times;</button>
         </div>
-        <div id="cartItems" class="flex-grow overflow-y-auto space-y-4"></div>
-        <div class="pt-8 border-t border-white/10">
-            <div id="promoNotice" class="text-green-500 text-xs font-bold uppercase mb-4 h-4"></div>
-            <button onclick="sendOrder()" class="w-full bg-green-600 py-5 rounded-2xl font-800 uppercase tracking-widest">Commander sur WhatsApp</button>
+
+        <div id="cartItems" class="space-y-4 mb-8"></div>
+
+        <div id="addressForm" class="space-y-4 pt-6 border-t border-white/10 text-left">
+            <h3 class="text-green-500 font-bold uppercase text-xs tracking-widest">Informations de livraison</h3>
+            <input type="text" id="uName" placeholder="Votre Nom" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-green-500 text-white">
+            <input type="text" id="uAddr" placeholder="Adresse complète (N°, rue...)" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-green-500 text-white">
+            <div class="grid grid-cols-2 gap-2">
+                <input type="text" id="uCp" placeholder="Code Postal" class="bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-green-500 text-white">
+                <input type="text" id="uCity" value="Troyes" class="bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-green-500 text-white">
+            </div>
+            <textarea id="uNote" placeholder="Instructions supplémentaires..." class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-green-500 h-20 text-white"></textarea>
+        </div>
+
+        <div class="mt-8 pt-8 border-t border-white/10">
+            <div id="promoNotice" class="text-green-500 text-xs font-bold uppercase mb-4 text-center"></div>
+            <button onclick="sendOrder()" class="w-full bg-green-600 py-6 rounded-2xl font-800 uppercase tracking-widest shadow-xl shadow-green-600/20 active:scale-95 transition-all">
+                🚀 Commander via WhatsApp
+            </button>
         </div>
     </div>
 
@@ -95,71 +108,66 @@
         let isAdmin = false;
         let cart = [];
 
-        let inventory = JSON.parse(localStorage.getItem('so_market_v6')) || [
-            { id: 1, name: "Blue Razz Ice", range: "Shisha 12000", stock: 5, img: "", isNew: true },
-            { id: 2, name: "Double Apple", range: "Shisha 12000", stock: 2, img: "", isNew: false }
+        let inventory = JSON.parse(localStorage.getItem('uber_jnr_v1')) || [
+            { id: 1, name: "Blue Razz Ice", range: "Shisha 12000", stock: 10, img: "", isNew: true },
+            { id: 2, name: "Peach Ice", range: "Alien 10000", stock: 2, img: "", isNew: false }
         ];
 
-        function toggleCart() {
-            const m = document.getElementById('cartModal');
-            m.classList.toggle('translate-x-full');
-            renderCart();
-        }
+        function toggleCart() { document.getElementById('cartModal').classList.toggle('translate-x-full'); renderCart(); }
 
         function addToCart(id) {
             const item = inventory.find(p => p.id === id);
             if (item && item.stock > 0) {
-                cart.push(item);
+                cart.push({...item});
                 updateCartCount();
-                const btn = event.target;
-                btn.innerText = "Ajouté !";
-                setTimeout(() => btn.innerText = "Ajouter au panier", 1000);
+                renderCart();
             }
         }
 
-        function updateCartCount() {
-            document.getElementById('cartCount').innerText = cart.length;
-            document.getElementById('cartCount').classList.add('cart-badge');
-            setTimeout(() => document.getElementById('cartCount').classList.remove('cart-badge'), 500);
-        }
+        function updateCartCount() { document.getElementById('cartCount').innerText = cart.length; }
 
         function renderCart() {
             const container = document.getElementById('cartItems');
             container.innerHTML = "";
-            let counts = {};
-            cart.forEach(item => counts[item.name] = (counts[item.name] || 0) + 1);
-
-            Object.keys(counts).forEach(name => {
+            if(cart.length === 0) container.innerHTML = "<p class='text-gray-600 italic text-center'>Le panier Uber Jnr est vide</p>";
+            
+            cart.forEach((item, idx) => {
                 container.innerHTML += `
-                    <div class="flex justify-between items-center bg-white/5 p-4 rounded-xl">
-                        <div>
-                            <p class="font-bold text-sm uppercase">${name}</p>
-                            <p class="text-xs text-gray-500">Quantité: ${counts[name]}</p>
+                    <div class="flex justify-between items-center bg-white/5 p-4 rounded-xl border border-white/5">
+                        <div class="text-sm">
+                            <span class="text-green-500 font-bold block text-[10px] uppercase">${item.range}</span>
+                            <span class="font-bold uppercase text-white">${item.name}</span>
                         </div>
-                        <button onclick="removeFromCart('${name}')" class="text-red-500 text-xs font-bold">Suppr</button>
+                        <button onclick="removeFromCart(${idx})" class="text-red-500 text-xs font-bold bg-red-500/10 px-3 py-1 rounded-lg">Retirer</button>
                     </div>`;
             });
 
-            const promo = document.getElementById('promoNotice');
-            if (cart.length >= 4) {
-                promo.innerText = `✨ OFFRE 4+1 ACTIVE : LA 5ème EST OFFERTE !`;
-            } else {
-                promo.innerText = cart.length > 0 ? `Encore ${5 - cart.length} pour l'offre 4+1` : "";
-            }
+            const p = document.getElementById('promoNotice');
+            p.innerText = cart.length >= 4 ? "✅ OFFRE 4+1 VALIDÉE !" : (cart.length > 0 ? `Encore ${5 - cart.length} pour la gratuite` : "");
         }
 
-        function removeFromCart(name) {
-            const idx = cart.findIndex(item => item.name === name);
-            if (idx > -1) cart.splice(idx, 1);
-            renderCart();
-            updateCartCount();
-        }
+        function removeFromCart(idx) { cart.splice(idx, 1); renderCart(); updateCartCount(); }
 
         function sendOrder() {
-            if (cart.length === 0) return alert("Le panier est vide");
+            const name = document.getElementById('uName').value;
+            const addr = document.getElementById('uAddr').value;
+            const cp = document.getElementById('uCp').value;
+            const city = document.getElementById('uCity').value;
+            const note = document.getElementById('uNote').value;
+
+            if (cart.length === 0) return alert("Le panier est vide.");
+            if (!name || !addr || !cp) return alert("Veuillez remplir vos coordonnées de livraison.");
+
             let recap = cart.map(i => `- ${i.name} (${i.range})`).join('\n');
             let total = cart.length;
-            let msg = `Bonjour S'O Market ! Je souhaite commander :\n\n${recap}\n\nTotal: ${total} JNR.\nOffre 4+1 incluse si éligible.`;
+            
+            let msg = `🛍️ COMMANDE UBER JNR - TROYES\n\n`;
+            msg += `👤 CLIENT : ${name}\n`;
+            msg += `📍 ADRESSE : ${addr}, ${cp} ${city}\n`;
+            if(note) msg += `📝 NOTE : ${note}\n`;
+            msg += `\n📦 PRODUITS :\n${recap}\n\n`;
+            msg += `🔥 TOTAL : ${total} JNR (Offre 4+1 incluse)`;
+
             window.open(`https://wa.me/${MON_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
@@ -169,66 +177,55 @@
             const rangeFilter = document.getElementById('filterRange').value;
             container.innerHTML = "";
 
-            // Filtres
-            const select = document.getElementById('filterRange');
             const ranges = [...new Set(inventory.map(i => i.range))];
-            select.innerHTML = '<option value="all">Tous les modèles</option>';
+            const select = document.getElementById('filterRange');
+            select.innerHTML = '<option value="all">Tous les modèles JNR</option>';
             ranges.forEach(r => select.innerHTML += `<option value="${r}">${r}</option>`);
-            select.value = rangeFilter;
 
-            const filtered = inventory.filter(i => (i.name.toLowerCase().includes(search)) && (rangeFilter === "all" || i.range === rangeFilter));
+            const filtered = inventory.filter(i => i.name.toLowerCase().includes(search) && (rangeFilter === "all" || i.range === rangeFilter));
 
             filtered.sort((a,b) => b.isNew - a.isNew).forEach(item => {
-                const isLowStock = item.stock > 0 && item.stock <= 3;
+                const isLow = item.stock > 0 && item.stock <= 3;
                 const card = document.createElement('div');
-                card.className = `glass rounded-[2.5rem] overflow-hidden flex flex-col p-6 ${item.stock === 0 ? 'opacity-40 grayscale' : ''}`;
-                
+                card.className = `glass rounded-[2.5rem] p-6 flex flex-col ${item.stock === 0 ? 'opacity-30' : ''}`;
                 card.innerHTML = `
-                    <div class="relative h-48 mb-6 bg-white/5 rounded-2xl overflow-hidden skeleton">
-                        <img src="${item.img || 'https://via.placeholder.com/300x300/111/22c55e?text=JNR+SERIES'}" 
-                             onload="this.parentElement.classList.remove('skeleton')"
-                             class="w-full h-full object-contain p-4">
-                        ${item.isNew ? '<span class="absolute top-4 left-4 bg-yellow-400 text-black text-[10px] px-3 py-1 rounded-full font-800 uppercase tracking-widest">Nouveau</span>' : ''}
+                    <div class="h-48 bg-white/5 rounded-2xl mb-4 overflow-hidden flex items-center justify-center skeleton">
+                        <img src="${item.img || 'https://via.placeholder.com/300x300/111/22c55e?text=JNR'}" class="h-full object-contain p-4" onload="this.parentElement.classList.remove('skeleton')">
                     </div>
-                    <div class="flex justify-between items-start mb-2 text-green-500 font-bold text-[10px] uppercase tracking-widest">
-                        <span>${item.range}</span>
-                        ${isLowStock ? '<span class="text-orange-500">Plus que '+item.stock+' dispo !</span>' : ''}
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-[10px] font-bold text-green-500 uppercase">${item.range}</span>
+                        ${item.isNew ? '<span class="bg-yellow-400 text-black text-[8px] px-2 py-0.5 rounded font-bold uppercase">New</span>' : ''}
                     </div>
-                    <h3 class="text-2xl font-800 mb-8 uppercase italic italic tracking-tighter">${item.name}</h3>
-                    <button onclick="${item.stock > 0 ? `addToCart(${item.id})` : ''}" 
-                        class="mt-auto w-full ${item.stock > 0 ? 'bg-white text-black hover:bg-green-600 hover:text-white' : 'bg-white/5 text-gray-500'} py-4 rounded-2xl font-800 text-[11px] uppercase transition-all active:scale-95">
-                        ${item.stock > 0 ? 'Ajouter au panier' : 'Rupture de stock'}
+                    <h3 class="text-xl font-800 uppercase italic mb-6 text-white">${item.name}</h3>
+                    ${isLow ? `<p class="text-[10px] text-orange-500 font-bold mb-4">⚠️ Stock Limité (${item.stock})</p>` : ''}
+                    <button onclick="${item.stock > 0 ? `addToCart(${item.id})` : ''}" class="mt-auto w-full ${item.stock > 0 ? 'bg-white text-black' : 'bg-white/5 text-gray-500'} py-4 rounded-2xl font-800 text-xs uppercase transition-all">
+                        ${item.stock > 0 ? 'Ajouter' : 'Indisponible'}
                     </button>
-                    ${isAdmin ? `<div class="flex gap-2 mt-4"><button onclick="removeItem(${item.id})" class="text-[9px] text-red-500 uppercase font-bold">Supprimer</button></div>` : ''}
+                    ${isAdmin ? `<button onclick="removeItem(${item.id})" class="mt-2 text-red-500 text-[9px] uppercase font-bold">Supprimer</button>` : ''}
                 `;
                 container.appendChild(card);
             });
-            localStorage.setItem('so_market_v6', JSON.stringify(inventory));
+            localStorage.setItem('uber_jnr_v1', JSON.stringify(inventory));
         }
 
-        // --- ADMIN FONCTIONS ---
         function handleAdminAuth() {
             if(isAdmin) { isAdmin = false; document.getElementById('adminPanel').classList.add('hidden'); render(); }
-            else { if(prompt("Code :") === CODE_SECRET) { isAdmin = true; document.getElementById('adminPanel').classList.remove('hidden'); render(); } }
+            else if(prompt("Code Admin Uber Jnr :") === CODE_SECRET) { isAdmin = true; document.getElementById('adminPanel').classList.remove('hidden'); render(); }
         }
 
         function addPuff() {
             const name = document.getElementById('pName').value;
             const range = document.getElementById('pCat').value;
-            const img = document.getElementById('pImg').value;
             const stock = parseInt(document.getElementById('pQty').value) || 0;
+            const img = document.getElementById('pImg').value;
             const isNew = document.getElementById('pNew').value === "true";
             if(name && range) {
                 inventory.push({ id: Date.now(), name, range, stock, img, isNew });
                 render();
-                document.getElementById('pName').value = "";
             }
         }
 
-        function removeItem(id) {
-            inventory = inventory.filter(x => x.id !== id);
-            render();
-        }
+        function removeItem(id) { inventory = inventory.filter(x => x.id !== id); render(); }
 
         render();
     </script>
