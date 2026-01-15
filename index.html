@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S'O MARKET | Catalogue JNR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #000; color: #fff; overflow-x: hidden; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .promo-overlay { background: radial-gradient(circle at center, #111 0%, #000 100%); z-index: 100; }
+        .promo-card { border: 2px solid #22c55e; box-shadow: 0 0 50px rgba(34, 197, 94, 0.2); animation: scaleUp 0.5s ease-out; }
+        @keyframes scaleUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .new-badge { background: linear-gradient(90deg, #facc15, #eab308); color: black; font-weight: 800; }
+        .new-card { border: 1px solid rgba(250, 204, 21, 0.3); }
+        .product-card { transition: all 0.4s ease; opacity: 0; animation: fadeIn 0.6s ease forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .sold-out { filter: grayscale(1); opacity: 0.4; }
+    </style>
+</head>
+<body class="pb-20">
+
+    <div id="promoGate" class="fixed inset-0 promo-overlay flex items-center justify-center p-6 text-center">
+        <div class="promo-card max-w-lg w-full bg-[#0a0a0a] p-10 rounded-[3rem] relative">
+            <h2 class="text-5xl font-800 my-6 tracking-tighter uppercase leading-none text-white text-center">4 ACHETÉES<br><span class="text-green-500">1 OFFERTE</span></h2>
+            <p class="text-gray-400 mb-8 text-lg font-light italic">Exclusivement sur la gamme JNR</p>
+            <button onclick="closePromo()" class="w-full bg-green-600 hover:bg-green-500 text-white py-5 rounded-2xl font-800 uppercase tracking-widest transition-all">VOIR LE STOCK</button>
+        </div>
+    </div>
+
+    <nav class="fixed w-full z-50 glass px-6 py-4 flex justify-between items-center">
+        <div class="text-2xl font-800 tracking-tighter uppercase italic">S'O<span class="text-green-500">Market</span></div>
+        <div class="flex gap-4 items-center">
+            <button onclick="shareCatalog()" class="text-[10px] font-bold tracking-[0.2em] text-green-500 border border-green-500/30 px-3 py-1 rounded-full hover:bg-green-500 hover:text-black transition flex items-center gap-2">
+                <span>PARTAGER</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 256 256"><path d="M112,168a12,12,0,0,1-12,12H48a12,12,0,0,1-12-12V48A12,12,0,0,1,48,36h80a12,12,0,0,1,12,12v48a12,12,0,0,1-24,0V60H60V156h40A12,12,0,0,1,112,168Zm107.51,21.49-32,32a12,12,0,0,1-17,0l-32-32a12,12,0,0,1,17-17L172,187V112a12,12,0,0,1,24,0v75l16.49-16.51a12,12,0,0,1,17,17Z"></path></svg>
+            </button>
+            <button onclick="handleAdminAuth()" id="adminBtn" class="text-[9px] font-bold tracking-[0.3em] text-gray-500 pt-1 uppercase">Admin</button>
+        </div>
+    </nav>
+
+    <header class="pt-36 pb-10 text-center px-6">
+        <h1 class="text-6xl font-800 tracking-tighter uppercase italic text-white">JNR <span class="text-green-500">SERIES</span></h1>
+        <p class="text-gray-500 mt-2 text-sm uppercase tracking-[0.2em]">Catalogue Live • S'O Market</p>
+    </header>
+
+    <section class="max-w-6xl mx-auto px-6 mb-12 flex flex-col md:flex-row gap-4">
+        <input type="text" id="searchBar" onkeyup="render()" placeholder="Rechercher une saveur..." class="flex-grow bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-green-500 outline-none transition-all">
+        <select id="filterRange" onchange="render()" class="bg-white/5 border border-white/10 p-5 rounded-2xl outline-none min-w-[180px]">
+            <option value="all" class="bg-black text-white text-sm">Tous les modèles</option>
+        </select>
+    </section>
+
+    <section id="adminPanel" class="hidden max-w-6xl mx-auto mx-6 mb-12 p-8 glass rounded-[2rem] border-green-500/30">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-green-500 font-bold uppercase text-xs tracking-widest">Ajouter un produit</h3>
+            <button onclick="logoutAdmin()" class="text-[10px] bg-red-600/20 text-red-500 px-4 py-2 rounded-full font-bold hover:bg-red-600 hover:text-white transition">DÉCONNEXION ADMIN</button>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-4 text-black font-bold">
+            <input type="text" id="pName" placeholder="Goût" class="p-4 rounded-xl outline-none border border-white/10">
+            <input type="text" id="pCat" placeholder="Modèle (ex: Shisha 12k)" class="p-4 rounded-xl outline-none border border-white/10">
+            <select id="pNew" class="p-4 rounded-xl outline-none border border-white/10">
+                <option value="false">Standard</option>
+                <option value="true">✨ NOUVEAUTÉ</option>
+            </select>
+            <select id="pStock" class="p-4 rounded-xl outline-none border border-white/10">
+                <option value="true">En Stock</option>
+                <option value="false">Rupture</option>
+            </select>
+            <button onclick="addPuff()" class="bg-green-600 text-white font-bold rounded-xl uppercase hover:bg-green-500">Ajouter</button>
+        </div>
+    </section>
+
+    <main id="catalogue" class="max-w-6xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        </main>
+
+    <script>
+        const CODE_SECRET = "2908";
+        const MON_WHATSAPP = "33785141135";
+        let isAdmin = false;
+
+        let inventory = JSON.parse(localStorage.getItem('so_market_v5')) || [
+            { id: 1, name: "Blue Razz Lemon", range: "Shisha 12000", available: true, isNew: true },
+            { id: 2, name: "Double Apple", range: "Shisha 12000", available: false, isNew: false }
+        ];
+
+        function closePromo() { document.getElementById('promoGate').style.display = 'none'; }
+
+        // SYSTÈME DE PARTAGE UNIVERSEL
+        async function shareCatalog() {
+            const shareData = {
+                title: "S'O MARKET | Catalogue JNR",
+                text: "Découvre le catalogue JNR chez S'O Market ! 4 achetées = 1 offerte. Regarde les goûts dispo ici :",
+                url: window.location.href
+            };
+
+            try {
+                if (navigator.share) {
+                    await navigator.share(shareData);
+                } else {
+                    // Fallback si le navigateur ne supporte pas le partage (PC fixe par ex)
+                    const text = encodeURIComponent(shareData.text + " " + shareData.url);
+                    window.open(`https://wa.me/?text=${text}`, '_blank');
+                }
+            } catch (err) {
+                console.log("Erreur de partage :", err);
+            }
+        }
+
+        function handleAdminAuth() {
+            if (isAdmin) logoutAdmin();
+            else {
+                const pass = prompt("Code Administrateur :");
+                if (pass === CODE_SECRET) {
+                    isAdmin = true;
+                    document.getElementById('adminPanel').classList.remove('hidden');
+                    document.getElementById('adminBtn').innerText = "QUITTER ADMIN";
+                    document.getElementById('adminBtn').classList.add('text-red-500');
+                    render();
+                }
+            }
+        }
+
+        function logoutAdmin() {
+            isAdmin = false;
+            document.getElementById('adminPanel').classList.add('hidden');
+            document.getElementById('adminBtn').innerText = "ADMIN";
+            document.getElementById('adminBtn').classList.remove('text-red-500');
+            render();
+        }
+
+        function render() {
+            const container = document.getElementById('catalogue');
+            const search = document.getElementById('searchBar').value.toLowerCase();
+            const rangeFilter = document.getElementById('filterRange').value;
+            container.innerHTML = "";
+            
+            const select = document.getElementById('filterRange');
+            const ranges = [...new Set(inventory.map(i => i.range))];
+            select.innerHTML = '<option value="all" class="bg-black text-white text-sm">Tous les modèles</option>';
+            ranges.forEach(r => select.innerHTML += `<option value="${r}" class="bg-black text-white text-sm">${r}</option>`);
+            select.value = rangeFilter;
+
+            const filtered = inventory.filter(item => {
+                return (item.name.toLowerCase().includes(search)) && (rangeFilter === "all" || item.range === rangeFilter);
+            }).sort((a, b) => b.isNew - a.isNew);
+
+            filtered.forEach((item, idx) => {
+                const card = document.createElement('div');
+                card.className = `product-card glass rounded-[2.5rem] p-7 flex flex-col ${!item.available ? 'sold-out' : ''} ${item.isNew ? 'new-card' : ''}`;
+                card.style.animationDelay = `${idx * 0.05}s`;
+                
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-[9px] font-800 text-green-500 uppercase tracking-widest">${item.range}</span>
+                        ${item.isNew ? '<span class="new-badge text-[9px] px-2 py-0.5 rounded tracking-widest uppercase">Nouveau</span>' : ''}
+                    </div>
+                    <h3 class="text-2xl font-800 mb-8 tracking-tighter uppercase italic text-white">${item.name}</h3>
+                    <div class="mt-auto flex flex-col gap-3">
+                        <button onclick="${item.available ? `contact('${item.name}', '${item.range}')` : ''}" 
+                        class="w-full ${item.available ? 'bg-white text-black hover:bg-green-600 hover:text-white' : 'bg-white/5 text-gray-500'} py-4 rounded-2xl font-800 text-[10px] uppercase transition-all">
+                            ${item.available ? 'Vérifier via WhatsApp' : 'Victime de son succès'}
+                        </button>
+                        ${isAdmin ? `
+                            <div class="flex gap-2 pt-2 border-t border-white/5">
+                                <button onclick="toggleStock(${item.id})" class="flex-1 bg-blue-600/20 text-blue-400 py-2 rounded-lg text-[9px] font-bold">STOCK</button>
+                                <button onclick="toggleNew(${item.id})" class="flex-1 bg-yellow-600/20 text-yellow-400 py-2 rounded-lg text-[9px] font-bold">NEW</button>
+                                <button onclick="removeItem(${item.id})" class="flex-1 bg-red-600/20 text-red-400 py-2 rounded-lg text-[9px] font-bold">SUPPR</button>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            localStorage.setItem('so_market_v5', JSON.stringify(inventory));
+        }
+
+        function contact(n, r) {
+            const msg = `Bonjour S'O Market ! Je souhaite la JNR ${r} en ${n}. Je profite de l'offre 4+1 !`;
+            window.open(`https://wa.me/${MON_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function addPuff() {
+            const n = document.getElementById('pName').value, c = document.getElementById('pCat').value, 
+                  isN = document.getElementById('pNew').value === "true", s = document.getElementById('pStock').value === "true";
+            if(n && c) { inventory.push({ id: Date.now(), name: n, range: c, available: s, isNew: isN }); render(); document.getElementById('pName').value = ""; }
+        }
+
+        function toggleStock(id) { const i = inventory.find(x => x.id === id); i.available = !i.available; render(); }
+        function toggleNew(id) { const i = inventory.find(x => x.id === id); i.isNew = !i.isNew; render(); }
+        function removeItem(id) { if(confirm("Supprimer ?")) { inventory = inventory.filter(x => x.id !== id); render(); } }
+
+        render();
+    </script>
+</body>
+</html>
