@@ -1,4 +1,4 @@
-<!DOCTYPE html><!DOCTYPE html>
+<!DOCTYPE html><!DOCTYPE html><!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -8,153 +8,149 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: #000; color: #fff; scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        
-        .promo-container { background: #16a34a; overflow: hidden; position: fixed; top: 0; width: 100%; z-index: 100; padding: 12px 0; border-bottom: 2px solid rgba(0,0,0,0.1); }
-        .promo-wrapper { display: flex; width: max-content; animation: marquee-infinite 20s linear infinite; }
-        .promo-text { font-size: 14px; font-weight: 900; text-transform: uppercase; color: #000; font-style: italic; white-space: nowrap; display: flex; align-items: center; }
-        .separator { margin: 0 40px; }
-
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .promo-container { background: #22c55e; overflow: hidden; position: fixed; top: 0; width: 100%; z-index: 100; padding: 10px 0; }
+        .promo-wrapper { display: flex; width: max-content; animation: marquee-infinite 25s linear infinite; }
+        .promo-text { font-size: 11px; font-weight: 900; text-transform: uppercase; color: #000; font-style: italic; white-space: nowrap; }
         @keyframes marquee-infinite { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-        .live-dot { height: 8px; width: 8px; background-color: #22c55e; border-radius: 50%; display: inline-block; margin-right: 5px; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); } }
-        .modal { display: none; position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,0.95); align-items: center; justify-content: center; padding: 20px; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        .live-dot { height: 8px; width: 8px; background-color: #22c55e; border-radius: 50%; display: inline-block; margin-right: 6px; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); } 70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); } 100% { transform: scale(0.9); } }
+        .modal { display: none; position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,0.98); align-items: center; justify-content: center; padding: 20px; }
+        .progress-step { height: 6px; flex: 1; border-radius: 10px; background: rgba(255,255,255,0.1); }
+        .progress-step.active { background: #22c55e; box-shadow: 0 0 10px rgba(34, 197, 94, 0.5); }
         ::-webkit-scrollbar { display: none; }
+        .address-input { width: 100%; bg-color: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 12px; color: white; outline: none; font-size: 13px; font-style: italic; }
+        .address-input:focus { border-color: #22c55e; }
     </style>
 </head>
-<body class="pb-24">
+<body class="pb-10">
 
     <div class="promo-container">
         <div class="promo-wrapper">
             <div class="promo-text">
-                ⚡ OFFRE EXCLUSIVE : 4 JNR ACHETÉES = LA 5ÈME OFFERTE ! <span class="separator">🎁</span> INVITE 5 POTES = 1 JNR GRATUITE ! ⚡
-                <span class="separator">🔥🔥🔥</span>
-                ⚡ OFFRE EXCLUSIVE : 4 JNR ACHETÉES = LA 5ÈME OFFERTE ! <span class="separator">🎁</span> INVITE 5 POTES = 1 JNR GRATUITE ! ⚡
-                <span class="separator">🔥🔥🔥</span>
-            </div>
-            <div class="promo-text">
-                ⚡ OFFRE EXCLUSIVE : 4 JNR ACHETÉES = LA 5ÈME OFFERTE ! <span class="separator">🎁</span> INVITE 5 POTES = 1 JNR GRATUITE ! ⚡
-                <span class="separator">🔥🔥🔥</span>
-                ⚡ OFFRE EXCLUSIVE : 4 JNR ACHETÉES = LA 5ÈME OFFERTE ! <span class="separator">🎁</span> INVITE 5 POTES = 1 JNR GRATUITE ! ⚡
-                <span class="separator">🔥🔥🔥</span>
+                ⚡ LIVRAISON EXPRESS TROYES & AGGLO <span class="mx-10">📦</span> 4 JNR ACHETÉES = LA 5ÈME OFFERTE <span class="mx-10">🔥</span> DISPONIBLE 7J/7 <span class="mx-10">⚡</span>
+                ⚡ LIVRAISON EXPRESS TROYES & AGGLO <span class="mx-10">📦</span> 4 JNR ACHETÉES = LA 5ÈME OFFERTE <span class="mx-10">🔥</span> DISPONIBLE 7J/7 <span class="mx-10">⚡</span>
             </div>
         </div>
     </div>
 
-    <nav class="fixed top-12 w-full z-50 glass px-6 py-4 flex justify-between items-center">
-        <div class="text-2xl font-800 uppercase italic">Uber<span class="text-green-500">Jnr</span></div>
+    <nav class="fixed top-10 w-full z-50 glass px-6 py-4 flex justify-between items-center border-b border-white/10">
+        <div class="text-2xl font-800 uppercase italic tracking-tighter">UBER<span class="text-green-500">JNR</span></div>
         <div class="flex gap-3 items-center">
-            <button id="memberBtn" onclick="openAuth()" class="bg-green-600/10 border border-green-500/20 px-3 py-2 rounded-xl text-[9px] font-bold uppercase text-green-500 italic">Espace Membre</button>
-            <button onclick="toggleCart()" class="relative bg-white/10 p-3 rounded-full">
+            <button id="userBtn" onclick="openAuth()" class="bg-white/5 border border-white/10 px-4 py-2 rounded-xl text-[10px] font-bold uppercase italic">Connexion</button>
+            <button onclick="toggleCart()" class="relative bg-white/5 p-3 rounded-full border border-white/10">
                 🛒 <span id="cartCount" class="absolute -top-1 -right-1 bg-green-500 text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold text-black">0</span>
             </button>
-            <button onclick="handleAdminAuth()" class="text-[9px] font-bold text-gray-600 uppercase">Admin</button>
+            <button onclick="handleAdminAuth()" class="opacity-10 hover:opacity-100 ml-2">⚙️</button>
         </div>
     </nav>
 
-    <header class="pt-56 pb-10 text-center px-6">
-        <div id="statusBadge" class="flex flex-col items-center gap-2 mb-6">
-            <div id="statusIndicator" class="inline-flex items-center px-4 py-1 rounded-full border"></div>
-            <div id="courierCount" class="text-[10px] font-bold text-gray-400 uppercase italic"></div>
-        </div>
-        <h1 class="text-6xl font-800 uppercase italic">UBER <span class="text-green-500">JNR</span></h1>
-        <p class="text-[9px] text-gray-500 font-bold uppercase mt-4 tracking-[3px] italic">Premium Delivery Troyes</p>
+    <header class="pt-48 pb-10 text-center px-6">
+        <div id="statusIndicator" class="inline-flex items-center px-5 py-2 rounded-full border border-white/10 glass mb-8"></div>
+        <h1 class="text-7xl font-800 uppercase italic leading-none tracking-tighter">UBER<br><span class="text-green-500">JNR</span></h1>
+        <p class="text-[10px] text-gray-500 font-bold uppercase mt-6 tracking-[5px] italic">Premium Vapes • Troyes</p>
     </header>
 
-    <main id="catalogue" class="max-w-6xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></main>
+    <div id="categoryFilters" class="flex justify-center gap-2 mb-12 px-6 overflow-x-auto pb-4"></div>
+    <main id="catalogue" class="max-w-6xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></main>
 
-    <div id="authModal" class="modal">
-        <div class="max-w-md w-full glass p-10 rounded-[3rem] text-center relative">
-            <button onclick="closeAuth()" class="absolute top-6 right-8 text-gray-500 text-3xl">&times;</button>
-            <div id="authContent">
-                <h2 class="text-4xl font-800 uppercase mb-2 italic">CLUB <span class="text-green-500">JNR</span></h2>
-                <div class="space-y-4 mt-8">
-                    <input type="text" id="regName" placeholder="Ton Pseudonyme" class="w-full p-5 rounded-2xl bg-white/5 border border-white/10 text-center font-bold outline-none text-white">
-                    <input type="text" id="regPhone" placeholder="Ton numéro" class="w-full p-5 rounded-2xl bg-white/5 border border-white/10 text-center font-bold outline-none text-white">
-                    <button onclick="requestVerificationCode()" class="w-full bg-green-600 py-5 rounded-2xl font-800 uppercase italic">Recevoir mon code</button>
-                    <div id="verifyZone" class="hidden space-y-4 mt-6 pt-6 border-t border-white/10">
-                        <input type="number" id="verifyCodeInput" placeholder="0000" class="w-full p-5 rounded-2xl bg-white text-black text-3xl text-center font-bold">
-                        <button onclick="validateAccount()" class="w-full bg-white text-black py-5 rounded-2xl font-800 uppercase italic">Valider</button>
-                    </div>
+    <footer class="mt-32 border-t border-white/5 pt-20 pb-10 text-center">
+        <div class="flex justify-center gap-8 mb-10">
+            <a href="#" class="text-[11px] font-black uppercase tracking-widest text-gray-500 hover:text-green-500 transition-colors italic">Snapchat</a>
+            <a href="#" class="text-[11px] font-black uppercase tracking-widest text-gray-500 hover:text-green-500 transition-colors italic">Telegram</a>
+        </div>
+        <p class="text-[8px] text-white/20 uppercase tracking-[4px]">© Uber Jnr Troyes — Excellence en livraison</p>
+    </footer>
+
+    <div id="cartModal" class="fixed inset-y-0 right-0 w-full md:w-[480px] bg-[#080808] z-[300] transform translate-x-full transition-transform duration-500 flex flex-col border-l border-white/10">
+        <div class="p-8 border-b border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 class="text-3xl font-800 uppercase italic leading-none">VOTRE <span class="text-green-500">PANIER</span></h2>
                 </div>
+                <button onclick="toggleCart()" class="text-2xl">&times;</button>
             </div>
-            <div id="profileContent" class="hidden space-y-6">
-                <h2 id="profName" class="text-2xl font-800 uppercase text-green-500 italic"></h2>
-                <div class="bg-white/5 p-6 rounded-3xl border border-white/10">
-                    <p class="text-[10px] uppercase text-gray-400 mb-2 font-bold">Progression Cadeau</p>
-                    <div class="w-full bg-gray-800 h-3 rounded-full overflow-hidden mb-2">
-                        <div id="referralBar" class="bg-green-500 h-full transition-all duration-1000" style="width: 0%"></div>
-                    </div>
-                    <p class="text-sm font-bold"><span id="referralCountDisplay">0</span> / 5 parrainages</p>
+            <div class="flex gap-4">
+                <div class="bg-white/5 border border-white/10 rounded-xl px-4 py-2 flex-1 text-center">
+                    <p class="text-[8px] text-gray-500 uppercase font-bold">Délai</p>
+                    <p class="text-xs font-bold text-green-500">15-30 MIN</p>
                 </div>
-                <button onclick="shareWithFriend()" class="w-full bg-green-600 py-4 rounded-2xl font-800 uppercase text-xs italic">Parrainer un pote</button>
-                <button onclick="logout()" class="text-red-500 text-[10px] font-bold uppercase">Déconnexion</button>
+                <div class="bg-white/5 border border-white/10 rounded-xl px-4 py-2 flex-1 text-center">
+                    <p class="text-[8px] text-gray-500 uppercase font-bold">Livreurs</p>
+                    <p id="cartCourierInfo" class="text-xs font-bold text-white uppercase">1 ACTIF</p>
+                </div>
             </div>
         </div>
-    </div>
+        
+        <div id="cartItems" class="flex-grow p-8 overflow-y-auto space-y-3"></div>
 
-    <div id="cartModal" class="fixed inset-y-0 right-0 w-full md:w-[480px] bg-[#0a0a0a] z-[300] transform translate-x-full transition-transform duration-300 p-8 flex flex-col border-l border-white/10 overflow-y-auto">
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="text-3xl font-800 uppercase italic">Ma Course</h2>
-            <button onclick="toggleCart()" class="text-gray-500 text-4xl">&times;</button>
-        </div>
-        <div id="cartItems" class="space-y-4 mb-8"></div>
-        <div class="space-y-6 pt-6 border-t border-white/10">
-            <div class="space-y-3">
-                <h3 class="text-green-500 font-bold uppercase text-[10px] tracking-[3px] italic">📍 Détails Livraison</h3>
-                <input type="text" id="uAddr" placeholder="N° et Nom de rue" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none">
-                <div class="grid grid-cols-2 gap-2">
-                    <input type="text" id="uCp" placeholder="Code Postal" class="bg-white/5 border border-white/10 p-4 rounded-xl text-white text-center outline-none">
-                    <input type="text" id="uCity" value="Troyes" class="bg-white/5 border border-white/10 p-4 rounded-xl text-white text-center outline-none">
-                </div>
-                <textarea id="uNote" placeholder="Notes (Code, étage, etc...)" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white h-20 outline-none italic"></textarea>
+        <div class="p-8 space-y-3 border-t border-white/5 bg-black">
+            <input type="text" id="uStreet" placeholder="Numéro et nom de rue" class="address-input bg-white/5">
+            <div class="flex gap-2">
+                <input type="text" id="uZip" placeholder="Code Postal" class="address-input bg-white/5 flex-[0.4]">
+                <input type="text" id="uCity" placeholder="Ville" class="address-input bg-white/5 flex-[0.6]">
             </div>
-            <div class="space-y-3">
-                <h3 class="text-green-500 font-bold uppercase text-[10px] tracking-[3px] italic">💳 Mode de Règlement</h3>
-                <div class="grid grid-cols-1 gap-2">
-                    <button onclick="setPay('Carte (+0,40€ frais)', this)" class="pay-btn border border-white/10 p-4 rounded-xl text-[10px] font-bold uppercase bg-white/5 text-left flex justify-between"><span>💳 Carte (+0,40€ frais)</span></button>
-                    <button onclick="setPay('Espèces', this)" class="pay-btn border border-white/10 p-4 rounded-xl text-[10px] font-bold uppercase bg-white/5 text-left flex justify-between"><span>💵 Espèces</span></button>
-                </div>
+            <textarea id="uNotes" placeholder="Notes (étage, code, etc. - facultatif)" class="address-input bg-white/5 h-20 resize-none"></textarea>
+            
+            <div class="grid grid-cols-2 gap-2 pt-2">
+                <button onclick="setPay('Espèces', this)" class="pay-btn border border-white/10 p-4 rounded-xl text-[10px] font-black uppercase bg-white/5">💵 Espèces</button>
+                <button onclick="setPay('Carte', this)" class="pay-btn border border-white/10 p-4 rounded-xl text-[10px] font-black uppercase bg-white/5">💳 Carte</button>
             </div>
-            <div class="pt-4">
-                <div id="promoNotice" class="text-green-500 text-[10px] font-bold uppercase mb-4 text-center animate-pulse"></div>
-                <button id="orderBtn" onclick="sendOrder()" class="w-full bg-green-600 py-6 rounded-2xl font-800 uppercase italic shadow-xl shadow-green-600/20">⚡ Commander sur WhatsApp</button>
-            </div>
+            <button onclick="sendOrder()" class="w-full bg-green-600 py-6 rounded-2xl font-900 uppercase italic shadow-xl shadow-green-600/20">⚡ Commander</button>
         </div>
     </div>
 
     <div id="adminPanel" class="hidden fixed inset-0 z-[600] bg-black overflow-y-auto p-6 pt-24">
-        <div class="max-w-4xl mx-auto space-y-8">
+        <div class="max-w-5xl mx-auto space-y-8">
             <div class="flex justify-between items-center">
-                <h2 class="text-3xl font-800 uppercase text-green-500 italic">Admin Dashboard</h2>
-                <button onclick="handleAdminAuth()" class="text-white text-3xl">&times;</button>
+                <h2 class="text-4xl font-900 italic uppercase">ADMIN <span class="text-green-500">SYSTEM</span></h2>
+                <button onclick="handleAdminAuth()" class="bg-white/10 px-6 py-2 rounded-xl text-xs font-black uppercase">Fermer</button>
             </div>
-            <div class="flex gap-4 border-b border-white/10 pb-4">
-                <button onclick="showTab('clients')" class="text-xs font-bold uppercase text-green-500">Clients</button>
-                <button onclick="showTab('stock')" class="text-xs font-bold uppercase text-gray-500">Config & Stock</button>
-                <button onclick="backupSite()" class="text-xs font-bold uppercase text-blue-500 ml-auto italic">Sauvegarder HTML</button>
+            <div class="glass p-8 rounded-[2.5rem]">
+                <h3 class="text-green-500 text-xs font-black uppercase mb-6 italic tracking-widest">Commandes à valider (Fidélité)</h3>
+                <div id="pendingOrdersList" class="space-y-4"></div>
             </div>
-            <div id="tab-clients" class="tab-content active space-y-4"><div id="clientsList" class="grid gap-3"></div></div>
-            <div id="tab-stock" class="tab-content space-y-6 text-black font-bold">
-                <div class="glass p-6 rounded-3xl space-y-4">
-                    <p class="text-white uppercase text-[10px]">⚙️ STATUT & LIVREURS</p>
-                    <div class="grid grid-cols-2 gap-4">
-                        <input type="number" id="openHour" placeholder="Ouverture" class="p-4 rounded-xl">
-                        <input type="number" id="closeHour" placeholder="Fermeture" class="p-4 rounded-xl">
+            <div class="glass p-8 rounded-[2.5rem]">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-green-500 text-xs font-black uppercase italic tracking-widest">Catalogue & Stocks</h3>
+                    <button onclick="addNewFlavor()" class="bg-green-600 px-4 py-2 rounded-lg text-[9px] font-black uppercase italic">Ajouter</button>
+                </div>
+                <div id="adminStockDisplay" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            </div>
+            <div class="glass p-8 rounded-[2.5rem]">
+                <h3 class="text-green-500 text-xs font-black uppercase mb-6 italic tracking-widest">Membres inscrits</h3>
+                <div id="adminUserList" class="space-y-2"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="authModal" class="modal">
+        <div id="authContent" class="max-w-md w-full glass p-10 rounded-[3rem] relative">
+            <button onclick="closeAuth()" class="absolute top-6 right-8 text-gray-500 text-2xl">&times;</button>
+            <div id="profileContent" class="hidden text-center">
+                <h2 id="profileName" class="text-2xl font-900 italic mb-6"></h2>
+                <div class="bg-white/5 p-6 rounded-3xl border border-white/5 mb-6">
+                    <div class="flex justify-between mb-4 text-[10px] font-black uppercase"><span>Points Fidélité</span><span id="loyaltyText" class="text-green-500">0/5</span></div>
+                    <div class="flex gap-2" id="loyaltyBar">
+                        <div class="progress-step"></div><div class="progress-step"></div><div class="progress-step"></div><div class="progress-step"></div><div class="progress-step"></div>
                     </div>
-                    <input type="number" id="courierInput" placeholder="Nombre de livreurs" class="w-full p-4 rounded-xl">
-                    <button onclick="saveSettings()" class="w-full bg-green-600 text-white py-3 rounded-xl font-bold uppercase text-xs">Valider Config</button>
                 </div>
-                <div class="glass p-6 rounded-3xl space-y-4">
-                    <p class="text-white uppercase text-[10px]">📦 AJOUTER PRODUIT</p>
-                    <input type="text" id="pName" placeholder="Goût" class="w-full p-4 rounded-xl">
-                    <input type="text" id="pCat" placeholder="Gamme" class="w-full p-4 rounded-xl">
-                    <button onclick="addPuff()" class="w-full bg-green-600 text-white py-4 rounded-xl font-bold uppercase italic">Ajouter</button>
+                <button onclick="handleLogout()" class="text-red-500 text-[10px] font-black uppercase italic underline">Déconnexion</button>
+            </div>
+            <div id="authForms" class="space-y-4">
+                <h2 class="text-2xl font-900 italic text-center text-green-500 mb-8 uppercase">Club JNR</h2>
+                <div id="loginForm" class="space-y-4">
+                    <input type="text" id="authUser" placeholder="Pseudo" class="w-full bg-black border border-white/10 p-4 rounded-xl text-sm outline-none">
+                    <input type="password" id="authPass" placeholder="Passe" class="w-full bg-black border border-white/10 p-4 rounded-xl text-sm outline-none">
+                    <button onclick="handleLogin()" class="w-full bg-green-600 py-4 rounded-xl font-900 uppercase italic">Connexion</button>
+                    <button onclick="toggleAuthMode(true)" class="w-full text-xs text-gray-500 underline uppercase italic">Créer un compte</button>
                 </div>
-                <div id="adminStockDisplay" class="space-y-2"></div>
+                <div id="registerForm" class="hidden space-y-4">
+                    <input type="text" id="regUser" placeholder="Nouveau Pseudo" class="w-full bg-black border border-white/10 p-4 rounded-xl text-sm outline-none">
+                    <input type="password" id="regPass" placeholder="Nouveau Passe" class="w-full bg-black border border-white/10 p-4 rounded-xl text-sm outline-none">
+                    <button onclick="handleRegister()" class="w-full bg-white text-black py-4 rounded-xl font-900 uppercase italic">S'inscrire</button>
+                    <button onclick="toggleAuthMode(false)" class="w-full text-xs text-gray-500 underline uppercase italic">Retour</button>
+                </div>
             </div>
         </div>
     </div>
@@ -162,156 +158,170 @@
     <script>
         const MON_WHATSAPP = "33785141135";
         const ADMIN_PASS = "2908";
-        const CODES_VALIDES = ["4721","8305","1294","5562","3847","9210","6619","4038","7253","1540","1092","6641","3387","9012","4420","7731","2158","5904","8826","3047","2908"];
-
-        let selectedPayment = "Non spécifié";
+        
+        let inventory = JSON.parse(localStorage.getItem('jnr_inv')) || [
+            { id: 1, name: "Blue Razz Ice", cat: "Shisha 12000", stock: 10 },
+            { id: 2, name: "Watermelon Ice", cat: "Vaporesso", stock: 5 }
+        ];
+        let users = JSON.parse(localStorage.getItem('jnr_users_db')) || [];
+        let pendingPoints = JSON.parse(localStorage.getItem('jnr_pending_pts')) || [];
+        let currentCat = "Tous";
         let cart = [];
         let isAdmin = false;
-        let inventory = JSON.parse(localStorage.getItem('jnr_inv')) || [{ id: 1, name: "Blue Razz Ice", cat: "Shisha 12000" }];
-        let clients = JSON.parse(localStorage.getItem('jnr_clients')) || {};
-        let settings = JSON.parse(localStorage.getItem('jnr_set')) || { open: 10, close: 22, couriers: 1 };
+        let currentUser = JSON.parse(localStorage.getItem('jnr_user_session')) || null;
+        let selectedPay = "";
 
-        window.onload = function() {
-            renderCatalogue();
-            checkStatus();
-            const user = JSON.parse(localStorage.getItem('jnr_logged'));
-            if(user) updateUIMember(user);
-            document.getElementById('openHour').value = settings.open;
-            document.getElementById('closeHour').value = settings.close;
-            document.getElementById('courierInput').value = settings.couriers;
-        }
-
-        function setPay(method, btn) {
-            selectedPayment = method;
-            document.querySelectorAll('.pay-btn').forEach(b => b.classList.remove('border-green-500', 'bg-green-500/20'));
-            btn.classList.add('border-green-500', 'bg-green-500/20');
-        }
+        window.onload = () => { renderCatalogue(); renderCategories(); updateUserUI(); checkStatus(); };
 
         function renderCatalogue() {
-            const cont = document.getElementById('catalogue');
-            cont.innerHTML = "";
-            inventory.forEach(item => {
+            const cont = document.getElementById('catalogue'); cont.innerHTML = "";
+            const filtered = currentCat === "Tous" ? inventory : inventory.filter(i => i.cat === currentCat);
+            filtered.forEach(item => {
                 cont.innerHTML += `
-                    <div class="glass rounded-[2.5rem] p-6 flex flex-col">
-                        <div class="h-48 bg-white/5 rounded-3xl mb-4"></div>
-                        <span class="text-[9px] font-bold text-green-500 uppercase italic text-center">${item.cat}</span>
-                        <h3 class="text-xl font-800 uppercase italic mb-6 text-center italic">${item.name}</h3>
-                        <button onclick="addToCart(${item.id})" class="mt-auto w-full bg-white text-black py-4 rounded-2xl font-800 text-xs uppercase italic text-center">Ajouter au panier</button>
-                    </div>`;
+                <div class="glass rounded-[2rem] p-6 border border-white/5 ${item.stock <= 0 ? 'opacity-30 pointer-events-none' : ''}">
+                    <div class="h-40 bg-white/5 rounded-[1.5rem] mb-6 flex items-center justify-center text-4xl">💨</div>
+                    <span class="text-[8px] font-black text-green-500 uppercase italic tracking-widest">${item.cat}</span>
+                    <h3 class="text-xl font-800 uppercase italic mt-1">${item.name}</h3>
+                    <p class="text-[9px] text-gray-500 font-bold mt-2 uppercase italic">${item.stock} EN STOCK</p>
+                    <button onclick="addToCart(${item.id})" class="mt-8 w-full bg-white text-black py-4 rounded-xl font-900 text-[10px] uppercase italic transition-all hover:bg-green-600 hover:text-white">Ajouter</button>
+                </div>`;
             });
         }
 
-        function addToCart(id) {
-            const item = inventory.find(i => i.id === id);
-            if(item) { cart.push(item); renderCart(); }
+        function renderCategories() {
+            const cats = ["Tous", ...new Set(inventory.map(i => i.cat))];
+            document.getElementById('categoryFilters').innerHTML = cats.map(c => 
+                `<button onclick="setCat('${c}')" class="px-6 py-2 rounded-full border ${c === currentCat ? 'bg-green-600 border-green-600 text-black' : 'border-white/10 text-white'} text-[9px] font-black uppercase italic">${c}</button>`
+            ).join('');
+        }
+
+        function setCat(c) { currentCat = c; renderCategories(); renderCatalogue(); }
+        function addToCart(id) { 
+            const item = inventory.find(i => i.id === id); 
+            if(item && item.stock > 0) { cart.push(item); document.getElementById('cartCount').innerText = cart.length; renderCart(); }
         }
 
         function renderCart() {
-            document.getElementById('cartCount').innerText = cart.length;
-            const cont = document.getElementById('cartItems');
-            cont.innerHTML = cart.length === 0 ? "<p class='text-center text-gray-500 italic py-10 uppercase text-[10px]'>Panier vide</p>" : "";
+            const c = document.getElementById('cartItems'); c.innerHTML = cart.length === 0 ? `<p class="text-center opacity-20 text-[10px] uppercase font-black py-10">Panier vide</p>` : "";
             cart.forEach((item, idx) => {
-                cont.innerHTML += `<div class="flex justify-between items-center bg-white/5 p-4 rounded-xl border border-white/10"><div><p class="font-bold uppercase">${item.name}</p></div><button onclick="cart.splice(${idx},1);renderCart()" class="text-red-500 text-xl font-bold">&times;</button></div>`;
+                c.innerHTML += `<div class="flex justify-between items-center bg-white/5 p-4 rounded-xl border border-white/5 italic text-xs font-bold uppercase">
+                    <span>${item.name}</span><button onclick="cart.splice(${idx},1);renderCart();document.getElementById('cartCount').innerText=cart.length;">&times;</button>
+                </div>`;
             });
-            document.getElementById('promoNotice').innerText = cart.length >= 4 ? "🎁 OFFRE 4+1 ACTIVÉE !" : "";
         }
 
         function sendOrder() {
-            const addr = document.getElementById('uAddr').value;
-            const cp = document.getElementById('uCp').value;
+            const street = document.getElementById('uStreet').value;
+            const zip = document.getElementById('uZip').value;
             const city = document.getElementById('uCity').value;
-            const note = document.getElementById('uNote').value;
-            if(cart.length === 0 || !addr) return alert("Remplis ton panier et ton adresse !");
-            if(selectedPayment === "Non spécifié") return alert("Choisis un mode de règlement !");
-            
-            const user = JSON.parse(localStorage.getItem('jnr_logged')) || { phone: "Invité", name: "Invité" };
-            
-            let recap = cart.map(i => `- ${i.name}`).join('\n');
-            let msg = `⚡ NOUVELLE COMMANDE\n👤 Client : ${user.name} (${user.phone})\n📍 Adresse : ${addr}, ${cp} ${city}\n📝 Note : ${note}\n💳 Paiement : ${selectedPayment}\n📦 Produits :\n${recap}\n🔥 TOTAL : ${cart.length} JNR`;
-            
-            window.open(`https://wa.me/${MON_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
-        }
+            const notes = document.getElementById('uNotes').value;
 
-        function requestVerificationCode() {
-            const p = document.getElementById('regPhone').value;
-            const n = document.getElementById('regName').value;
-            if(!n || n.length < 2) return alert("Choisis un pseudonyme");
-            if(p.length < 10) return alert("Numéro invalide");
-            document.getElementById('verifyZone').classList.remove('hidden');
-            window.open(`https://wa.me/${MON_WHATSAPP}?text=🔐%20CODE%20ACCÈS%20POUR%20${n}%20(${p})`, '_blank');
-        }
-
-        function validateAccount() {
-            const input = document.getElementById('verifyCodeInput').value;
-            const phone = document.getElementById('regPhone').value;
-            const name = document.getElementById('regName').value;
-            if (CODES_VALIDES.includes(input)) {
-                localStorage.setItem('jnr_logged', JSON.stringify({ phone: phone, name: name, verified: true }));
-                if(!clients[phone]) clients[phone] = { points: 0, name: name };
-                save(); location.reload();
+            if(!street || !zip || !city || cart.length === 0) return alert("Veuillez remplir l'adresse et le panier");
+            
+            if(currentUser) {
+                pendingPoints.push({ id: Date.now(), user: currentUser.name, text: `${cart.length} JNR` });
+                localStorage.setItem('jnr_pending_pts', JSON.stringify(pendingPoints));
             }
+
+            const fullAddr = `${street}, ${zip} ${city}`;
+            let msg = `⚡ COMMANDE ${currentUser ? currentUser.name : '(Invité)'}\n📍 ADRESSE: ${fullAddr}\n📝 NOTES: ${notes || 'N/A'}\n💳 PAIEMENT: ${selectedPay || 'Non précisé'}\n📦 PRODUITS:\n${cart.map(i => `- ${i.name}`).join('\n')}`;
+            window.open(`https://wa.me/${MON_WHATSAPP}?text=${encodeURIComponent(msg)}`);
+            cart = []; renderCart(); toggleCart();
+            alert("Commande envoyée ! Votre point fidélité sera ajouté après validation de l'admin.");
         }
 
-        function updateUIMember(user) {
-            document.getElementById('memberBtn').innerText = "✅ " + user.name;
-            document.getElementById('authContent').classList.add('hidden');
-            document.getElementById('profileContent').classList.remove('hidden');
-            document.getElementById('profName').innerText = user.name;
-            const pts = clients[user.phone] ? clients[user.phone].points : 0;
-            document.getElementById('referralCountDisplay').innerText = pts;
-            document.getElementById('referralBar').style.width = (pts * 20) + "%";
-        }
-
+        // ADMIN FUNCTIONS
         function handleAdminAuth() {
             if(isAdmin) { isAdmin = false; document.getElementById('adminPanel').classList.add('hidden'); }
-            else if(prompt("Pass :") === ADMIN_PASS) { isAdmin = true; document.getElementById('adminPanel').classList.remove('hidden'); renderAdminClients(); renderAdminStock(); }
+            else if(prompt("Pass ?") === ADMIN_PASS) { isAdmin = true; document.getElementById('adminPanel').classList.remove('hidden'); renderAdmin(); }
         }
 
-        function checkStatus() {
-            const h = new Date().getHours();
-            const indicator = document.getElementById('statusIndicator');
-            const couriersLabel = document.getElementById('courierCount');
-            const isOpen = h >= settings.open && h < settings.close;
-            if(isOpen) {
-                indicator.innerHTML = `<span class="live-dot"></span><span class="text-green-500 text-[10px] font-bold uppercase italic">Livreurs en ligne</span>`;
-                couriersLabel.innerText = `${settings.couriers} livreur(s) disponible(s) sur Troyes`;
-            } else {
-                indicator.innerHTML = `<span class="text-red-500 text-[10px] font-bold uppercase italic tracking-widest text-center">Réouverture à ${settings.open}h</span>`;
-                couriersLabel.innerText = "Service actuellement fermé";
+        function renderAdmin() {
+            const plist = document.getElementById('pendingOrdersList');
+            plist.innerHTML = pendingPoints.length === 0 ? `<p class="text-gray-600 text-[10px] uppercase text-center italic">Aucune commande à valider</p>` : "";
+            pendingPoints.forEach(p => {
+                plist.innerHTML += `<div class="flex justify-between items-center bg-white/5 p-4 rounded-xl">
+                    <span class="text-xs font-bold uppercase italic">${p.user} (${p.text})</span>
+                    <button onclick="validateP(${p.id})" class="bg-green-600 px-4 py-2 rounded-lg text-[9px] font-black uppercase italic text-black">Valider Point</button>
+                </div>`;
+            });
+            const slist = document.getElementById('adminStockDisplay'); slist.innerHTML = "";
+            inventory.forEach(i => {
+                slist.innerHTML += `<div class="bg-white/5 p-4 rounded-xl flex justify-between items-center">
+                    <div><p class="text-xs font-bold uppercase italic">${i.name}</p><p class="text-[8px] text-gray-500 uppercase italic">${i.cat}</p></div>
+                    <div class="flex items-center gap-3">
+                        <button onclick="adjS(${i.id},-1)" class="w-8 h-8 bg-white/10 rounded">-</button>
+                        <span class="text-xs font-black">${i.stock}</span>
+                        <button onclick="adjS(${i.id},1)" class="w-8 h-8 bg-green-600 rounded text-black">+</button>
+                        <button onclick="delFlavor(${i.id})" class="text-red-500 text-xs font-black ml-2">&times;</button>
+                    </div>
+                </div>`;
+            });
+            const ulist = document.getElementById('adminUserList');
+            ulist.innerHTML = users.map(u => `<div class="flex justify-between p-3 bg-white/5 rounded-lg text-xs font-black italic uppercase"><span>${u.name}</span><span class="text-green-500">${u.points || 0}/5</span></div>`).join('');
+        }
+
+        function validateP(id) {
+            const p = pendingPoints.find(x => x.id === id);
+            const u = users.find(x => x.name === p.user);
+            if(u) { u.points = (u.points || 0) + 1; if(u.points > 5) u.points = 1; localStorage.setItem('jnr_users_db', JSON.stringify(users)); }
+            pendingPoints = pendingPoints.filter(x => x.id !== id);
+            localStorage.setItem('jnr_pending_pts', JSON.stringify(pendingPoints));
+            renderAdmin(); updateUserUI();
+        }
+
+        function addNewFlavor() {
+            const name = prompt("Nom du goût ?");
+            const cat = prompt("Catégorie ?");
+            if(name && cat) {
+                inventory.push({ id: Date.now(), name, cat, stock: 10 });
+                localStorage.setItem('jnr_inv', JSON.stringify(inventory));
+                renderAdmin(); renderCatalogue(); renderCategories();
             }
         }
 
-        function saveSettings() { 
-            settings.open = parseInt(document.getElementById('openHour').value); 
-            settings.close = parseInt(document.getElementById('closeHour').value); 
-            settings.couriers = parseInt(document.getElementById('courierInput').value);
-            save(); checkStatus(); alert("Config à jour !");
-        }
+        function delFlavor(id) { if(confirm("Supprimer ?")) { inventory = inventory.filter(i => i.id !== id); localStorage.setItem('jnr_inv', JSON.stringify(inventory)); renderAdmin(); renderCatalogue(); renderCategories(); } }
+        function adjS(id, v) { const i = inventory.find(x => x.id === id); i.stock = Math.max(0, i.stock + v); localStorage.setItem('jnr_inv', JSON.stringify(inventory)); renderAdmin(); renderCatalogue(); }
 
-        function toggleCart() { document.getElementById('cartModal').classList.toggle('translate-x-full'); }
+        function updateUserUI() {
+            const btn = document.getElementById('userBtn');
+            if(currentUser) {
+                btn.innerText = currentUser.name.toUpperCase();
+                document.getElementById('profileName').innerText = currentUser.name;
+                const u = users.find(x => x.name === currentUser.name);
+                const pts = u ? (u.points || 0) : 0;
+                document.getElementById('loyaltyText').innerText = `${pts}/5`;
+                document.querySelectorAll('.progress-step').forEach((s, i) => s.classList.toggle('active', i < pts));
+                document.getElementById('authForms').classList.add('hidden');
+                document.getElementById('profileContent').classList.remove('hidden');
+            } else {
+                btn.innerText = "CONNEXION";
+                document.getElementById('authForms').classList.remove('hidden');
+                document.getElementById('profileContent').classList.add('hidden');
+            }
+        }
+        function handleRegister() {
+            const u = document.getElementById('regUser').value, p = document.getElementById('regPass').value;
+            if(!u || users.find(x => x.name === u)) return;
+            const newUser = { name: u, pass: p, points: 0 };
+            users.push(newUser); localStorage.setItem('jnr_users_db', JSON.stringify(users));
+            currentUser = newUser; localStorage.setItem('jnr_user_session', JSON.stringify(newUser));
+            updateUserUI(); closeAuth();
+        }
+        function handleLogin() {
+            const u = document.getElementById('authUser').value, p = document.getElementById('authPass').value;
+            const found = users.find(x => x.name === u && x.pass === p);
+            if(found) { currentUser = found; localStorage.setItem('jnr_user_session', JSON.stringify(found)); updateUserUI(); closeAuth(); }
+        }
+        function handleLogout() { currentUser = null; localStorage.removeItem('jnr_user_session'); updateUserUI(); }
+        function toggleAuthMode(r) { document.getElementById('loginForm').classList.toggle('hidden', r); document.getElementById('registerForm').classList.toggle('hidden', !r); }
         function openAuth() { document.getElementById('authModal').style.display = 'flex'; }
         function closeAuth() { document.getElementById('authModal').style.display = 'none'; }
-        function showTab(tab) { document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active')); document.getElementById('tab-' + tab).classList.add('active'); }
-        function save() { localStorage.setItem('jnr_inv', JSON.stringify(inventory)); localStorage.setItem('jnr_clients', JSON.stringify(clients)); localStorage.setItem('jnr_set', JSON.stringify(settings)); }
-        function logout() { localStorage.removeItem('jnr_logged'); location.reload(); }
-        function backupSite() { const b = new Blob([document.documentElement.outerHTML], { type: 'text/html' }); const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = `uber_jnr_v5.html`; a.click(); }
-        
-        function renderAdminClients() {
-            const list = document.getElementById('clientsList'); list.innerHTML = "";
-            Object.keys(clients).forEach(phone => {
-                list.innerHTML += `<div class="glass p-4 rounded-2xl flex justify-between items-center"><div class="text-left"><p class="font-bold italic text-green-500">${clients[phone].name}</p><p class="text-[10px] text-gray-400">${phone}</p></div><button onclick="clients['${phone}'].points=(clients['${phone}'].points+1)%6;save();renderAdminClients();" class="bg-green-600 px-3 py-1 rounded-lg text-xs">+1 PT</button></div>`;
-            });
-        }
-
-        function renderAdminStock() {
-            const list = document.getElementById('adminStockDisplay'); list.innerHTML = "";
-            inventory.forEach(item => {
-                list.innerHTML += `<div class="flex justify-between p-3 bg-white/5 rounded-xl text-xs text-white"><span>${item.name}</span><button onclick="inventory=inventory.filter(i=>i.id!=${item.id});save();renderAdminStock();renderCatalogue();" class="text-red-500">Suppr</button></div>`;
-            });
-        }
-        function addPuff() {
-            const n = document.getElementById('pName').value, c = document.getElementById('pCat').value;
-            if(n && c) { inventory.push({ id: Date.now(), name: n, cat: c }); save(); renderAdminStock(); renderCatalogue(); }
+        function toggleCart() { document.getElementById('cartModal').classList.toggle('translate-x-full'); }
+        function setPay(m, b) { selectedPay = m; document.querySelectorAll('.pay-btn').forEach(x => x.classList.remove('border-green-500','bg-green-600/10')); b.classList.add('border-green-500','bg-green-600/10'); }
+        function checkStatus() {
+            const isOpen = new Date().getHours() >= 10 && new Date().getHours() < 22;
+            document.getElementById('statusIndicator').innerHTML = `<span class="live-dot"></span><span class="text-green-500 text-[10px] font-black uppercase italic">${isOpen ? 'Ouvert' : 'Fermé'}</span>`;
         }
     </script>
 </body>
