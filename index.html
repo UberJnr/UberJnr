@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Uber Jnr | Premium Vapes ⚡</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --u-green: #22c55e; --u-red: #ef4444; --u-orange: #f97316; --u-blue: #3b82f6; }
+        html, body { height: 100%; margin: 0; padding: 0; scroll-behavior: smooth; }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: #000; color: #fff; overflow-x: hidden; 
+            -webkit-tap-highlight-color: transparent;
+            display: flex; flex-direction: column;
+            cursor: default;
+        }
+        main { flex: 1 0 auto; }
+        
+        /* GLASS UI */
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .glass-dark { background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); }
+
+        /* BANDEAU PROMO */
+        .promo-container { background: var(--u-green); overflow: hidden; width: 100%; padding: 12px 0; position: fixed; top: 0; z-index: 9999; }
+        .promo-wrapper { display: flex; width: fit-content; animation: marquee-infinite 25s linear infinite; }
+        .promo-text { font-size: 11px; font-weight: 900; text-transform: uppercase; color: #000; font-style: italic; white-space: nowrap; padding-right: 50px; }
+        @keyframes marquee-infinite { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        .hero-title { font-size: clamp(3rem, 12vw, 8rem); line-height: 0.8; font-weight: 800; font-style: italic; text-transform: uppercase; }
+        
+        /* BOUTONS & CARDS */
+        .btn-add-cart { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--u-green); transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1); }
+        .btn-add-cart:hover:not(:disabled) { background: var(--u-green); color: #000; transform: translateY(-3px); }
+        
+        .img-container { width: 100%; aspect-ratio: 1/1; background: #0a0a0a; border-radius: 24px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); position: relative; }
+        .product-card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+
+        .address-input { width: 100%; background: #0a0a0a; border: 1px solid rgba(255,255,255,0.1); padding: 14px; border-radius: 16px; color: white; outline: none; font-size: 14px; transition: all 0.3s; }
+        .address-input:focus { border-color: var(--u-green); background: #111; }
+
+        .modal { display: none; position: fixed; inset: 0; z-index: 15000; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px); align-items: center; justify-content: center; padding: 15px; }
+        .modal.active { display: flex; }
+
+        /* FIDELITE */
+        .loyalty-dot { height: 6px; border-radius: 10px; background: rgba(255,255,255,0.1); transition: all 0.5s ease; }
+        .loyalty-dot.active { background: var(--u-green); box-shadow: 0 0 10px var(--u-green); }
+
+        /* FAQ */
+        .faq-ans { overflow: hidden; max-height: 0; transition: max-height 0.4s ease-out, padding 0.4s; opacity: 0; }
+        .faq-ans.open { max-height: 250px; padding: 15px; opacity: 0.7; border-top: 1px solid rgba(255,255,255,0.05); }
+
+        /* FACTURE & BADGES */
+        .invoice-box { background: white; color: black; padding: 25px; border-radius: 10px; width: 100%; max-width: 450px; font-family: 'Courier New', Courier, monospace; max-height: 90vh; overflow-y: auto; }
+        .status-badge { padding: 4px 8px; border-radius: 6px; font-size: 8px; font-weight: 900; text-transform: uppercase; }
+        .status-pending { background: #555; color: white; }
+        .status-prep { background: var(--u-orange); color: white; }
+        .status-delivery { background: var(--u-blue); color: white; }
+        .status-done { background: var(--u-green); color: black; }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <div class="promo-container"><div class="promo-wrapper">
+        <div class="promo-text">9 JNR ACHETÉES = LA 10ÈME OFFERTE 🔥 LIVRAISON EXPRESS TROYES & AGGLO 📦</div>
+        <div class="promo-text">9 JNR ACHETÉES = LA 10ÈME OFFERTE 🔥 LIVRAISON EXPRESS TROYES & AGGLO 📦</div>
+    </div></div>
+
+    <header class="fixed top-[40px] left-0 right-0 z-[9000] p-3 md:p-4">
+        <nav class="glass max-w-7xl mx-auto rounded-2xl px-4 md:px-6 py-3 flex justify-between items-center">
+            <div class="text-lg md:text-2xl font-800 italic tracking-tighter">UBER<span class="text-green-500">JNR</span></div>
+            <div class="flex items-center gap-2 md:gap-3">
+                <button onclick="openAuth()" id="userBtn" class="bg-white/5 border border-white/10 px-3 py-1.5 rounded-xl text-[8px] md:text-[9px] font-black text-green-500 uppercase tracking-widest">S'IDENTIFIER</button>
+                <button onclick="toggleCart()" class="relative bg-white/5 p-2 md:p-3 rounded-full border border-white/10">
+                    🛒 <span id="cartCount" class="absolute -top-1 -right-1 bg-green-500 text-[10px] w-4 h-4 md:w-5 md:h-5 flex items-center justify-center rounded-full font-bold text-black">0</span>
+                </button>
+                <button onclick="handleAdminAuth()" class="opacity-10 hover:opacity-100 transition-opacity ml-1 text-xs">⚙️</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="pt-48 md:pt-64 pb-12 text-center px-4">
+            <div id="statusIndicator" class="inline-flex items-center px-4 py-2 rounded-full border border-white/10 glass mb-6 md:mb-10 text-[9px] font-black uppercase tracking-widest"></div>
+            <h1 class="hero-title"><span>UBER</span><br><span class="text-green-500">JNR</span></h1>
+            <p class="text-[9px] md:text-xs font-900 tracking-[0.3em] md:tracking-[0.5em] uppercase italic opacity-40 mt-8 mb-10">PREMIUM VAPES • TROYES & AGGLO</p>
+            <div class="max-w-xl mx-auto">
+                <input type="text" id="searchInput" oninput="renderCatalogue()" placeholder="RECHERCHER UN GOÛT..." class="w-full bg-white/5 border border-white/10 p-4 md:p-5 rounded-2xl text-center uppercase font-bold text-xs focus:border-green-500 outline-none transition-all">
+            </div>
+        </section>
+
+        <section id="catalogue" class="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-8 pb-24 md:pb-32"></section>
+
+        <section class="max-w-4xl mx-auto px-4 md:px-6 py-16 md:py-24 border-t border-white/5">
+            <h2 class="text-2xl md:text-3xl font-900 italic uppercase text-center mb-10 md:mb-16">FAQ <span class="text-green-500">AIDE</span></h2>
+            <div class="space-y-3">
+                <div class="glass rounded-2xl overflow-hidden"><button onclick="toggleFaq(this)" class="w-full p-5 text-left flex justify-between items-center"><span class="text-[10px] font-black uppercase">Paiement ?</span><span class="text-green-500">+</span></button><div class="faq-ans text-[10px] uppercase">Espèces / CB au livreur (+0.50€ CB).</div></div>
+                <div class="glass rounded-2xl overflow-hidden"><button onclick="toggleFaq(this)" class="w-full p-5 text-left flex justify-between items-center"><span class="text-[10px] font-black uppercase">Mineurs ?</span><span class="text-green-500">+</span></button><div class="faq-ans text-[10px] uppercase text-red-500">Strictement interdit -18 ans.</div></div>
+                <div class="glass rounded-2xl overflow-hidden"><button onclick="toggleFaq(this)" class="w-full p-5 text-left flex justify-between items-center"><span class="text-[10px] font-black uppercase">Fidélité ?</span><span class="text-green-500">+</span></button><div class="faq-ans text-[10px] uppercase">La 10ème puff est offerte automatique.</div></div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="glass-dark border-t border-white/10 pt-16 pb-10 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
+            <div><div class="text-xl font-800 italic mb-4 uppercase">UBER<span class="text-green-500">JNR</span></div><p class="text-[9px] font-bold opacity-30 uppercase">Troyes Premium Puffs.</p></div>
+            <div class="flex flex-col gap-2"><h4 class="text-[9px] font-black uppercase text-green-500">Réseaux</h4><p class="text-[10px] font-black uppercase">Instagram @uber.jnr10</p></div>
+            <div><h4 class="text-[9px] font-black uppercase text-green-500">Contact</h4><p class="text-lg font-900 italic">07 85 14 11 35</p></div>
+        </div>
+    </footer>
+
+    <div id="cartModal" class="fixed inset-y-0 right-0 w-full md:w-[450px] bg-black z-[20000] transform translate-x-full transition-transform duration-500 flex flex-col border-l border-white/10">
+        <div class="p-6 flex justify-between items-center border-b border-white/5"><h2 class="text-xl font-900 italic uppercase">Panier</h2><button onclick="toggleCart()" class="text-3xl">&times;</button></div>
+        <div id="cartItems" class="flex-grow p-6 overflow-y-auto space-y-4"></div>
+        <div class="p-6 bg-[#050505] border-t border-white/5 space-y-3">
+            <div class="flex justify-between items-end mb-2"><span class="text-[9px] opacity-40 uppercase">Total</span><span id="totalAmount" class="text-3xl font-900 text-green-500 italic">0€</span></div>
+            <input type="text" id="uStreet" placeholder="ADRESSE" class="address-input uppercase">
+            <input type="text" id="uZip" placeholder="CODE POSTAL" class="address-input uppercase">
+            <div class="grid grid-cols-2 gap-3">
+                <select id="uZone" onchange="renderCart()" class="address-input uppercase font-bold text-[11px]"><option value="Troyes">Troyes</option><option value="Agglo">Agglo</option></select>
+                <select id="uPay" onchange="renderCart()" class="address-input uppercase font-bold text-[11px]"><option value="Espèces">Espèces</option><option value="CB">Carte</option></select>
+            </div>
+            <button onclick="sendOrder()" class="w-full bg-green-500 text-black py-4 rounded-2xl font-900 uppercase italic">⚡ COMMANDER</button>
+        </div>
+    </div>
+
+    <div id="invoiceModal" class="modal">
+        <div class="invoice-box relative">
+            <button onclick="closeInvoice()" class="absolute top-4 right-4 text-black font-bold text-xs">[FERMER]</button>
+            <div class="text-center border-b-2 border-black pb-4"><h2 class="text-xl font-black italic">UBER JNR</h2><p class="text-[10px]">#<span id="invNum"></span></p></div>
+            <div class="py-4 text-[10px] space-y-1"><p id="invDate"></p><p id="invUser"></p><p id="invAddr"></p></div>
+            <table class="w-full text-[10px] mb-4"><tbody id="invItems"></tbody></table>
+            <div class="border-t-2 border-black pt-2 font-black text-right" id="invTotal"></div>
+            <button onclick="window.print()" class="w-full mt-6 bg-black text-white py-2 text-[8px] font-black uppercase">Imprimer</button>
+        </div>
+    </div>
+
+    <div id="authModal" class="modal">
+        <div class="max-w-md w-full glass p-8 rounded-[2.5rem] relative">
+            <button onclick="closeAuth()" class="absolute top-6 right-6 text-3xl opacity-20">&times;</button>
+            <div id="profileContent" class="hidden space-y-6">
+                <h2 id="profileName" class="text-lg font-900 text-green-500 uppercase italic text-center"></h2>
+                <div class="space-y-2"><p class="text-[8px] font-black opacity-40 uppercase">Ma Fidélité</p><div id="loyaltyBar" class="grid grid-cols-10 gap-1.5"></div></div>
+                <div class="pt-4 border-t border-white/10">
+                    <h3 class="text-[10px] font-black uppercase text-green-500 mb-3">Suivi Commandes</h3>
+                    <div id="userOrdersList" class="space-y-2 max-h-48 overflow-y-auto"></div>
+                </div>
+                <button onclick="handleLogout()" class="w-full text-red-500 font-black text-[9px] uppercase underline mt-4">Déconnexion</button>
+            </div>
+            <div id="authForms" class="space-y-4">
+                <h2 class="text-xl font-900 uppercase text-center mb-6 italic">Espace Client</h2>
+                <input type="email" id="authEmail" placeholder="EMAIL" class="address-input">
+                <input type="password" id="authPass" placeholder="PASS" class="address-input">
+                <button onclick="handleLogin()" class="w-full bg-green-500 text-black py-4 rounded-2xl font-900 uppercase italic">Connexion</button>
+                <button onclick="handleRegister()" class="w-full text-[9px] font-black opacity-40 uppercase">Créer un compte</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="adminPanel" class="fixed inset-0 z-[30000] bg-black overflow-y-auto hidden p-4 md:p-8">
+        <div class="max-w-6xl mx-auto space-y-8 pb-20">
+            <div class="flex justify-between items-center">
+                <h2 class="text-2xl font-900 text-green-500 uppercase italic">Admin Panel</h2>
+                <div class="flex items-center gap-2">
+                    <button id="audioEnableBtn" onclick="enableAudio()" class="bg-blue-500 text-[8px] font-black px-3 py-2 rounded-lg uppercase">Activer Son 🔔</button>
+                    <button onclick="closeAdmin()" class="text-3xl">&times;</button>
+                </div>
+            </div>
+            <div class="grid lg:grid-cols-3 gap-6">
+                <div class="glass p-6 rounded-3xl space-y-4">
+                    <h3 class="text-[10px] font-black uppercase text-green-500">Ajout Produit</h3>
+                    <input type="text" id="newProdName" placeholder="NOM" class="address-input"><input type="number" id="newProdStock" placeholder="STOCK" class="address-input">
+                    <div id="dropzone" class="w-full h-32 rounded-2xl flex items-center justify-center border-2 border-dashed border-white/10 relative">
+                        <p id="dropText" class="text-[8px] uppercase opacity-40">Photo</p>
+                        <img id="preview" class="hidden absolute inset-0 w-full h-full object-cover rounded-2xl">
+                        <input type="file" id="fileInput" class="hidden" accept="image/*">
+                    </div>
+                    <button onclick="addNewProductAdmin()" class="w-full bg-white text-black py-3 rounded-xl font-black uppercase text-[10px]">Valider</button>
+                </div>
+                <div class="glass p-6 rounded-3xl text-center"><h3 class="text-[10px] font-black uppercase text-green-500 mb-4">Boutique</h3><button onclick="toggleStoreStatus()" id="statusBtn" class="w-full py-8 rounded-2xl font-black uppercase italic"></button></div>
+                <div class="glass p-6 rounded-3xl"><h3 class="text-[10px] font-black uppercase text-green-500 mb-4">Clients</h3><div id="adminUserList" class="max-h-48 overflow-y-auto space-y-2"></div></div>
+            </div>
+            <div class="glass p-6 rounded-3xl"><h3 class="text-[10px] font-black uppercase text-green-500 mb-6">Commandes en Temps Réel</h3><div id="adminOrdersDisplay" class="space-y-3"></div></div>
+            <div class="glass p-6 rounded-3xl"><h3 class="text-[10px] font-black uppercase text-green-500 mb-6">Stocks</h3><div id="adminStockList" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4"></div></div>
+        </div>
+    </div>
+
+    <script>
+        const MON_WHATSAPP = "33785141135";
+        const ADMIN_PASS = "2908";
+        let tempImageData = "";
+        let audioEnabled = false;
+        let lastKnownOrderCount = 0;
+
+        let inventory = JSON.parse(localStorage.getItem('jnr_inv')) || [];
+        let users = JSON.parse(localStorage.getItem('jnr_users_db')) || [];
+        let allOrders = JSON.parse(localStorage.getItem('jnr_all_orders')) || [];
+        let storeStatus = JSON.parse(localStorage.getItem('jnr_store_status')) ?? true;
+        let currentUser = JSON.parse(localStorage.getItem('jnr_user_session')) || null;
+        let cart = [];
+
+        // Audio System
+        const notificationSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
+        function enableAudio() { 
+            audioEnabled = true; 
+            document.getElementById('audioEnableBtn').classList.add('hidden');
+            notificationSound.play().then(() => notificationSound.pause()); // Unlock audio context
+        }
+
+        window.onload = () => { 
+            refreshUI(); 
+            initAdminDropzone(); 
+            lastKnownOrderCount = allOrders.length;
+            setInterval(checkNewOrders, 3000); // Check for new orders every 3s
+        };
+
+        function checkNewOrders() {
+            const currentOrders = JSON.parse(localStorage.getItem('jnr_all_orders')) || [];
+            if(currentOrders.length > lastKnownOrderCount) {
+                if(audioEnabled) notificationSound.play();
+                allOrders = currentOrders;
+                lastKnownOrderCount = allOrders.length;
+                refreshUI();
+            } else if(currentOrders.length !== allOrders.length) {
+                allOrders = currentOrders;
+                refreshUI();
+            }
+        }
+
+        function refreshUI() {
+            checkStatus(); renderCatalogue(); updateCartCount(); updateUserUI();
+            if(!document.getElementById('adminPanel').classList.contains('hidden')) refreshAdmin();
+        }
+
+        function checkStatus() {
+            const ind = document.getElementById('statusIndicator');
+            const btn = document.getElementById('statusBtn');
+            ind.innerHTML = storeStatus ? `<span class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse mr-2"></span>OUVERT` : `<span class="w-2.5 h-2.5 rounded-full bg-red-500 mr-2"></span>FERMÉ`;
+            if(btn) { btn.innerText = storeStatus ? "OUVERT" : "FERMÉ"; btn.style.background = storeStatus ? "#22c55e" : "#ef4444"; }
+        }
+
+        function toggleStoreStatus() { storeStatus = !storeStatus; localStorage.setItem('jnr_store_status', storeStatus); refreshUI(); }
+
+        function renderCatalogue() {
+            const cont = document.getElementById('catalogue'), q = document.getElementById('searchInput').value.toLowerCase();
+            cont.innerHTML = "";
+            inventory.filter(i => i.name.toLowerCase().includes(q)).forEach(item => {
+                cont.innerHTML += `<div class="glass rounded-3xl p-4 text-center">
+                    <div class="img-container mb-4"><img src="${item.img || ''}" class="product-card-img"></div>
+                    <h3 class="text-[9px] font-black uppercase mb-4 h-8 flex items-center justify-center">${item.name}</h3>
+                    <button onclick="addToCart(${item.id})" ${item.stock <= 0 ? 'disabled' : ''} class="btn-add-cart w-full py-3 rounded-xl font-black text-[9px] uppercase">
+                        ${item.stock > 0 ? 'Ajouter • 10€' : 'Rupture'}
+                    </button>
+                </div>`;
+            });
+        }
+
+        function initAdminDropzone() {
+            const dz = document.getElementById('dropzone'), fi = document.getElementById('fileInput');
+            dz.onclick = () => fi.click();
+            fi.onchange = (e) => {
+                const r = new FileReader();
+                r.onload = (ev) => {
+                    tempImageData = ev.target.result;
+                    document.getElementById('preview').src = tempImageData;
+                    document.getElementById('preview').classList.remove('hidden');
+                    document.getElementById('dropText').classList.add('hidden');
+                };
+                r.readAsDataURL(e.target.files[0]);
+            };
+        }
+
+        function addNewProductAdmin() {
+            const n = document.getElementById('newProdName').value, s = parseInt(document.getElementById('newProdStock').value);
+            if(n && s) {
+                inventory.push({ id: Date.now(), name: n.toUpperCase(), stock: s, img: tempImageData });
+                localStorage.setItem('jnr_inv', JSON.stringify(inventory));
+                tempImageData = ""; refreshUI();
+            }
+        }
+
+        function addToCart(id) {
+            if(!storeStatus) return alert("Fermé");
+            const i = inventory.find(x => x.id === id);
+            if(i && i.stock > 0) { cart.push(i); updateCartCount(); renderCart(); toggleCart(); }
+        }
+        function toggleCart() { document.getElementById('cartModal').classList.toggle('translate-x-full'); }
+        function updateCartCount() { document.getElementById('cartCount').innerText = cart.length; }
+        
+        function renderCart() {
+            const c = document.getElementById('cartItems'), z = document.getElementById('uZone').value, p = document.getElementById('uPay').value;
+            c.innerHTML = cart.length === 0 ? `<div class="text-center py-10 opacity-20 uppercase font-black text-[10px]">Vide</div>` : "";
+            cart.forEach((item, idx) => {
+                c.innerHTML += `<div class="flex justify-between items-center bg-white/5 p-4 rounded-xl text-[9px] font-black uppercase">
+                    <span>${item.name}</span><button onclick="cart.splice(${idx},1);renderCart();updateCartCount();" class="text-red-500">X</button>
+                </div>`;
+            });
+            let total = cart.length * 10;
+            if(z === "Agglo") total += 3;
+            if(p === "CB") total += 0.50;
+            document.getElementById('totalAmount').innerText = total.toFixed(2) + "€";
+        }
+
+        function sendOrder() {
+            const s = document.getElementById('uStreet').value, cp = document.getElementById('uZip').value;
+            if(!s || !cp || cart.length === 0) return alert("Infos manquantes");
+            const oID = Date.now().toString().slice(-6);
+            const total = document.getElementById('totalAmount').innerText;
+            
+            const newOrder = { 
+                id: oID, 
+                user: currentUser?.email || 'Invité', 
+                items: cart.map(i=>i.name).join(', '), 
+                total: total, 
+                date: new Date().toLocaleString(),
+                status: 'pending',
+                address: `${s}, ${cp}`
+            };
+
+            const updatedOrders = [...allOrders, newOrder];
+            localStorage.setItem('jnr_all_orders', JSON.stringify(updatedOrders));
+            allOrders = updatedOrders;
+            lastKnownOrderCount = allOrders.length;
+
+            if(currentUser) { 
+                currentUser.orders += cart.length; 
+                const idx = users.findIndex(u=>u.email===currentUser.email); 
+                users[idx]=currentUser; 
+                localStorage.setItem('jnr_users_db', JSON.stringify(users)); 
+                localStorage.setItem('jnr_user_session', JSON.stringify(currentUser));
+            }
+            cart.forEach(c => { const i = inventory.find(inv => inv.id === c.id); if(i) i.stock--; });
+            localStorage.setItem('jnr_inv', JSON.stringify(inventory));
+
+            showInvoice(newOrder);
+            window.open(`https://wa.me/${MON_WHATSAPP}?text=${encodeURIComponent("COMMANDE #"+oID+" - "+total+" - "+newOrder.address)}`);
+            cart = []; refreshUI(); toggleCart();
+        }
+
+        function showInvoice(o) {
+            document.getElementById('invNum').innerText = o.id;
+            document.getElementById('invDate').innerText = "DATE: " + o.date;
+            document.getElementById('invUser').innerText = "CLIENT: " + o.user;
+            document.getElementById('invAddr').innerText = "ADRESSE: " + o.address;
+            document.getElementById('invItems').innerHTML = o.items.split(', ').map(i => `<tr><td>${i}</td><td class="text-right">10€</td></tr>`).join('');
+            document.getElementById('invTotal').innerText = "TOTAL: " + o.total;
+            document.getElementById('invoiceModal').classList.add('active');
+        }
+
+        function closeInvoice() { document.getElementById('invoiceModal').classList.remove('active'); }
+        function handleAdminAuth() { if(prompt("Pass:") === ADMIN_PASS) { document.getElementById('adminPanel').classList.remove('hidden'); refreshAdmin(); } }
+        function closeAdmin() { document.getElementById('adminPanel').classList.add('hidden'); }
+
+        function updateOrderStatus(orderId, newStatus) {
+            const o = allOrders.find(x => x.id === orderId);
+            if(o) {
+                o.status = newStatus;
+                localStorage.setItem('jnr_all_orders', JSON.stringify(allOrders));
+                refreshAdmin();
+                updateUserUI();
+            }
+        }
+
+        function getStatusLabel(s) {
+            if(s === 'pending') return '<span class="status-badge status-pending">En attente</span>';
+            if(s === 'prep') return '<span class="status-badge status-prep">Prép</span>';
+            if(s === 'delivery') return '<span class="status-badge status-delivery">En route</span>';
+            if(s === 'done') return '<span class="status-badge status-done">Livrée</span>';
+            return s;
+        }
+
+        function refreshAdmin() {
+            const uList = document.getElementById('adminUserList'); uList.innerHTML = "";
+            users.forEach((u, idx) => {
+                uList.innerHTML += `<div class="bg-white/5 p-3 rounded-xl flex justify-between items-center text-[9px] uppercase font-black">
+                    <span class="truncate pr-2">${u.email}</span><button onclick="deleteUser(${idx})" class="text-red-500">🗑️</button>
+                </div>`;
+            });
+            const oList = document.getElementById('adminOrdersDisplay'); oList.innerHTML = "";
+            allOrders.slice().reverse().forEach(o => {
+                oList.innerHTML += `<div class="bg-white/5 p-4 rounded-2xl flex flex-col md:flex-row justify-between md:items-center gap-4 text-[9px] font-black uppercase">
+                    <div class="space-y-1">
+                        <p class="text-green-500">#${o.id} - ${o.user}</p>
+                        <p class="opacity-50">${o.items}</p>
+                        <p>${o.total} - ${o.address}</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <select onchange="updateOrderStatus('${o.id}', this.value)" class="bg-black border border-white/10 p-2 rounded-lg text-[8px]">
+                            <option value="pending" ${o.status==='pending'?'selected':''}>Attente</option>
+                            <option value="prep" ${o.status==='prep'?'selected':''}>Prép</option>
+                            <option value="delivery" ${o.status==='delivery'?'selected':''}>Route</option>
+                            <option value="done" ${o.status==='done'?'selected':''}>Livrée</option>
+                        </select>
+                        <button onclick="showInvoiceAdmin('${o.id}')" class="bg-white/10 p-2 rounded-lg">📄</button>
+                    </div>
+                </div>`;
+            });
+            const sList = document.getElementById('adminStockList'); sList.innerHTML = "";
+            inventory.forEach(item => {
+                sList.innerHTML += `<div class="glass p-2 rounded text-center"><img src="${item.img}" class="w-8 h-8 mx-auto object-cover rounded mb-1">
+                <p class="text-[7px] font-black truncate">${item.name}</p>
+                <div class="flex justify-center items-center gap-1 my-1"><button onclick="changeStock(${item.id},-1)">-</button><span>${item.stock}</span><button onclick="changeStock(${item.id},1)">+</button></div>
+                <button onclick="deleteProd(${item.id})" class="text-red-500 text-[7px]">DEL</button></div>`;
+            });
+        }
+
+        function showInvoiceAdmin(id) { const o = allOrders.find(x=>x.id===id); if(o) showInvoice(o); }
+        function deleteUser(idx) { if(confirm("Supprimer ?")) { users.splice(idx, 1); localStorage.setItem('jnr_users_db', JSON.stringify(users)); refreshAdmin(); } }
+        function changeStock(id, val) { const i = inventory.find(x => x.id === id); if(i) i.stock += val; localStorage.setItem('jnr_inv', JSON.stringify(inventory)); refreshAdmin(); renderCatalogue(); }
+        function deleteProd(id) { if(confirm("Supprimer ?")) { inventory = inventory.filter(i => i.id !== id); localStorage.setItem('jnr_inv', JSON.stringify(inventory)); refreshAdmin(); renderCatalogue(); } }
+
+        function openAuth() { document.getElementById('authModal').classList.add('active'); }
+        function closeAuth() { document.getElementById('authModal').classList.remove('active'); }
+        function handleRegister() {
+            const e = document.getElementById('authEmail').value, p = document.getElementById('authPass').value;
+            if(!e.includes('@') || p.length < 4) return alert("Invalide");
+            if(users.find(u => u.email === e)) return alert("Existe déjà");
+            users.push({ email: e, pass: p, orders: 0 });
+            localStorage.setItem('jnr_users_db', JSON.stringify(users));
+            alert("Compte créé !");
+        }
+        function handleLogin() {
+            const e = document.getElementById('authEmail').value, p = document.getElementById('authPass').value;
+            let f = users.find(u => u.email === e && u.pass === p);
+            if(f) { currentUser = f; localStorage.setItem('jnr_user_session', JSON.stringify(f)); updateUserUI(); closeAuth(); } else alert("Erreur");
+        }
+        function updateUserUI() {
+            if(!currentUser) return;
+            document.getElementById('userBtn').innerText = currentUser.email.split('@')[0].toUpperCase();
+            document.getElementById('authForms').classList.add('hidden');
+            document.getElementById('profileContent').classList.remove('hidden');
+            document.getElementById('profileName').innerText = currentUser.email;
+            const bar = document.getElementById('loyaltyBar'); bar.innerHTML = "";
+            for(let i=0; i<10; i++) bar.innerHTML += `<div class="loyalty-dot ${i < (currentUser.orders % 10) ? 'active' : ''}"></div>`;
+            
+            const uOrders = document.getElementById('userOrdersList'); uOrders.innerHTML = "";
+            allOrders.filter(o => o.user === currentUser.email).reverse().forEach(o => {
+                uOrders.innerHTML += `<div class="bg-white/5 p-3 rounded-xl flex justify-between items-center text-[8px] font-black uppercase">
+                    <div><span>#${o.id}</span><br><span class="opacity-40">${o.date.split(' ')[0]}</span></div>
+                    ${getStatusLabel(o.status)}
+                    <button onclick="showInvoiceAdmin('${o.id}')" class="text-green-500">FACT</button>
+                </div>`;
+            });
+        }
+        function handleLogout() { localStorage.removeItem('jnr_user_session'); location.reload(); }
+        function toggleFaq(btn) { btn.nextElementSibling.classList.toggle('open'); }
+    </script>
+</body>
+</html>
